@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/boundlessgeo/spatialconnect-js"
   },
-  "author": "Wes Richardet <wes@tetriscodes.com> (http://tetriscodes.com)",
+  "author": "Wes Richardet <wrichardet@boundlessgeo.com> (http://boundlessgeo.com)",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/boundlessgeo/spatialconnect-js/issues"
