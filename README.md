@@ -1,1 +1,1 @@
-# Spatial Connect Javascript Library for Android & iOS
+# SpatialConnect Javascript Library for Android & iOS
