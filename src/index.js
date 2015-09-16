@@ -35,10 +35,40 @@ var SpatialConnect = (function(){
   sc.action.disableGPS = () => window.WebViewJavascriptBridge.send({action:'gps',value:0});
   sc.action.enableGPS = () => window.WebViewJavascriptBridge.send({action:'gps',value:1});
   sc.action.stores = () => window.WebViewJavascriptBridge.send({action:'stores'});
-  sc.action.spatialQuery = (storeid) => window.WebViewJavascriptBridge.send(
+  sc.action.spatialQuery = (storeId) => window.WebViewJavascriptBridge.send(
     {
       action : 'spatialQuery',
-      value : storeid === undefined ? 'allstores' : storeid
+      value : storeId === undefined ? 'allstores' : storeId
+    }
+  );
+  sc.action.geospatialQuery = (storeId) => window.WebViewJavascriptBridge.send(
+    {
+      action : 'geospatialQuery',
+      value : storeId === undefined ? 'allstores' : storeId
+    }
+  );
+  sc.action.sendMessage = (action,value) => window.WebViewJavascriptBridge.send(
+    {
+      action : action,
+      value : value
+    }
+  );
+  sc.action.createFeature = (featureObj) => window.WebViewJavascriptBridge.send(
+    {
+      action : 'createFeature',
+      value : { feature : featureObj }
+    }
+  );
+  sc.action.updateFeature = (featureObj) => window.WebViewJavascriptBridge.send(
+    {
+      action : 'updateFeature',
+      value : { feature : featureObj }
+    }
+  );
+  sc.action.deleteFeature = (featureId) => window.WebViewJavascriptBridge.send(
+    {
+      action : 'deleteFeature',
+      value : featureId
     }
   );
 
