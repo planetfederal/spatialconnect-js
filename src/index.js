@@ -1,6 +1,8 @@
 'use strict';
 /*global WebViewJavascriptBridge*/
 var Rx = require('rx');
+var Commands = require('./commands');
+
 var SpatialConnect = (function(){
   var sc = {};
 
@@ -32,19 +34,31 @@ var SpatialConnect = (function(){
   });
 
   sc.action = {};
-  sc.action.disableGPS = () => window.WebViewJavascriptBridge.send({action:'gps',value:0});
-  sc.action.enableGPS = () => window.WebViewJavascriptBridge.send({action:'gps',value:1});
-  sc.action.stores = () => window.WebViewJavascriptBridge.send({action:'stores'});
-  sc.action.spatialQuery = (storeId) => window.WebViewJavascriptBridge.send(
+  sc.action.disableGPS = () => window.WebViewJavascriptBridge.send({action:Commands.SENSORSERVICE_GPS,value:0});
+  sc.action.enableGPS = () => window.WebViewJavascriptBridge.send({action:Commands.SENSORSERVICE_GPS,value:1});
+  sc.action.stores = () => window.WebViewJavascriptBridge.send(
     {
-      action : 'spatialQuery',
-      value : storeId === undefined ? 'allstores' : storeId
+      action:Commands.DATASERVICE_ACTIVESTORESLIST
     }
   );
-  sc.action.geospatialQuery = (storeId) => window.WebViewJavascriptBridge.send(
+  sc.action.spatialQuery = (filter,storeId) => window.WebViewJavascriptBridge.send(
     {
-      action : 'geospatialQuery',
-      value : storeId === undefined ? 'allstores' : storeId
+      action : storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL :
+        Commands.DATASERVICE_SPATIALQUERY,
+      value : {
+        filter : filter,
+        storeId : storeId
+      }
+    }
+  );
+  sc.action.geospatialQuery = (filter,storeId) => window.WebViewJavascriptBridge.send(
+    {
+      action : storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL :
+        Commands.DATASERVICE_GEOSPATIALQUERY,
+        value : {
+          filter : filter,
+          storeId : storeId
+        }
     }
   );
   sc.action.sendMessage = (action,value) => window.WebViewJavascriptBridge.send(
@@ -55,19 +69,19 @@ var SpatialConnect = (function(){
   );
   sc.action.createFeature = (featureObj) => window.WebViewJavascriptBridge.send(
     {
-      action : 'createFeature',
+      action : Commands.DATASERVICE_CREATEFEATURE,
       value : { feature : featureObj }
     }
   );
   sc.action.updateFeature = (featureObj) => window.WebViewJavascriptBridge.send(
     {
-      action : 'updateFeature',
+      action : Commands.DATASERVICE_UPDATEFEATURE,
       value : { feature : featureObj }
     }
   );
   sc.action.deleteFeature = (featureId) => window.WebViewJavascriptBridge.send(
     {
-      action : 'deleteFeature',
+      action : Commands.DATASERVICE_DELETEFEATURE,
       value : featureId
     }
   );
