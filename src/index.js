@@ -46,7 +46,7 @@ var SpatialConnect = (function(){
       action : storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL :
         Commands.DATASERVICE_SPATIALQUERY,
       value : {
-        filter : filter,
+        filter : filter.value(),
         storeId : storeId
       }
     }
@@ -56,7 +56,7 @@ var SpatialConnect = (function(){
       action : storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL :
         Commands.DATASERVICE_GEOSPATIALQUERY,
         value : {
-          filter : filter,
+          filter : filter.value(),
           storeId : storeId
         }
     }
