@@ -1,5 +1,5 @@
 'use strict';
-var spatialFeature = require('./spatialfeature');
+var spatialFeature = require('./sc.spatialfeature');
 var ol = require('openlayers');
 var _ = require('lodash');
 
