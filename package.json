@@ -2,7 +2,7 @@
   "name": "spatialconnect-js",
   "version": "0.0.1",
   "description": "Javascript Library for Spatial Connect",
-  "main": "index.js",
+  "main": "dist/spatialconnect.js",
   "scripts": {
     "test": "mocha -w --compilers js:babel/register src/index.test.js",
     "babel-node": "babel-node --stage 0"
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/boundlessgeo/spatialconnect-js",
   "dependencies": {
+    "lodash": "3.10.1",
     "openlayers": "3.9.0",
     "rx": "3.1.2",
     "uuid": "2.0.1"
@@ -27,7 +28,7 @@
     "babel-loader": "5.3.2",
     "chai": "3.3.0",
     "commitizen": "1.0.4",
-    "cz-conventional-changelog": "1.1.0",
+    "cz-conventional-changelog": "1.1.2",
     "mocha": "2.3.3",
     "webpack": "1.12.1"
   }

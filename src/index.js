@@ -2,6 +2,9 @@
 /*global WebViewJavascriptBridge*/
 var Rx = require('rx');
 var Commands = require('./commands');
+var filter = require('./filter');
+var SCSpatialFeature = require('./sc.spatialfeature.js');
+var SCGeometry = require('./sc.geometry');
 
 var SpatialConnect = (function(){
   var sc = {};
@@ -85,7 +88,10 @@ var SpatialConnect = (function(){
       value : featureId
     }
   );
-
+  sc.Filter = filter;
+  sc.SCGeometry = SCGeometry;
+  sc.SCSpatialFeature = SCSpatialFeature;
+  sc.Commands = Commands;
   return sc;
 })();
 
