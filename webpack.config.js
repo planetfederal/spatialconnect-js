@@ -1,10 +1,21 @@
+var path = require('path');
+
 module.exports = {
-  entry : './src/index.js',
+  entry : {
+    spatialconnect : './src/index.js',
+    test : './src/index.test.js'
+  },
+  output : {
+    library : 'spatialconnect',
+    libraryTarget : 'umd',
+    filename : './dist/[name].js'
+  },
+/*  entry : './src/index.js',
   output : {
     library : 'spatialconnect',
     libraryTarget : 'commonjs2',
     filename : './dist/spatialconnect.js'
-  },
+  },*/
   externals : {
     'ol':'openlayers'
   },
