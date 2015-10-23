@@ -8,7 +8,7 @@ var SCGeometry = require('./sc.geometry');
 var pre = require('./pre');
 var SC = require('./sc');
 
-var SpatialConnect = (function(){
+var SpatialConnect = (function() {
   var sc = {};
   sc.action = SC.action;
   sc.stream = SC.stream;
