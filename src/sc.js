@@ -59,8 +59,7 @@ var SpatialConnect = (function() {
   );
   sc.action.createFeature = (featureObj,storeId) => {
     featureObj.storeId = storeId;
-    window.WebViewJavascriptBridge.send(
-    {
+    window.WebViewJavascriptBridge.send({
       action : Commands.DATASERVICE_CREATEFEATURE,
       payload : { feature : featureObj }
     });
@@ -70,7 +69,6 @@ var SpatialConnect = (function() {
     payload: {
       filter: filter.value(),
       storeId: storeId
->>>>>>> 254276b... reformatting and adding explicit semicolons
     }
   });
   sc.action.geospatialQuery = (filter, storeId) => window.WebViewJavascriptBridge.send({
