@@ -6,134 +6,134 @@ var expect = require('chai').expect;
 var filter = require('./filter');
 var sc = require('./sc');
 
-var isArray = function (a) {
+var isArray = function(a) {
   return Array.isArray(a);
 };
 
-describe('filter',function() {
-  describe('geoBBOXContains',function () {
+describe('filter', function() {
+  describe('geoBBOXContains', function() {
     var f = filter().geoBBOXContains(
-      [-180,-90,180,90]
+      [-180, -90, 180, 90]
     );
     var val = f.value();
-    it('to be an array',function () {
+    it('to be an array', function() {
       expect(val.$geocontains).to.be.a('array');
     });
   });
 
-  describe('geoBBOXDisjoint',function () {
+  describe('geoBBOXDisjoint', function() {
     var f = filter().geoBBOXContains(
-      [-180,-90,180,90]
+      [-180, -90, 180, 90]
     );
     var val = f.value();
-    it('to be an array',function () {
+    it('to be an array', function() {
       expect(val.$geocontains).to.satisfy(isArray);
     });
   });
 
-  describe('greaterThan',function () {
+  describe('greaterThan', function() {
     var f = filter().greaterThan('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$gt).to.be.a('string');
     });
   });
 
-  describe('greaterThanOrEqual',function () {
+  describe('greaterThanOrEqual', function() {
     var f = filter().greaterThanOrEqual('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$gte).to.be.a('string');
     });
   });
 
-  describe('lessThan',function () {
+  describe('lessThan', function() {
     var f = filter().lessThan('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$lt).to.be.a('string');
     });
   });
 
-  describe('lessThanOrEqual',function() {
+  describe('lessThanOrEqual', function() {
     var f = filter().lessThanOrEqual('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$lte).to.be.a('string');
     });
   });
 
-  describe('equal',function () {
+  describe('equal', function() {
     var f = filter().equal('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$e).to.be.a('string');
     });
   });
 
-  describe('notEqual',function () {
+  describe('notEqual', function() {
     var f = filter().notEqual('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$ne).to.be.a('string');
     });
   });
 
-  describe('between',function () {
-    var f = filter().between('foo','foo2');
+  describe('between', function() {
+    var f = filter().between('foo', 'foo2');
     var val = f.value();
-    it('to be an object',function () {
+    it('to be an object', function() {
       expect(val.$between).to.be.a('object');
     });
   });
 
-  describe('notBetween',function() {
-    var f = filter().notBetween('foo','foo2');
+  describe('notBetween', function() {
+    var f = filter().notBetween('foo', 'foo2');
     var val = f.value();
-    it('to be an object',function () {
+    it('to be an object', function() {
       expect(val.$notbetween).to.be.a('object');
     });
   });
 
-  describe('in',function () {
+  describe('in', function() {
     var f = filter().in(
-      [-180,-90,180,90]
+      [-180, -90, 180, 90]
     );
     var val = f.value();
-    it('to be an array',function () {
+    it('to be an array', function() {
       expect(val.$in).to.be.a('array');
     });
   });
 
-  describe('notIn',function () {
+  describe('notIn', function() {
     var f = filter().notIn(
-      [-180,-90,180,90]
+      [-180, -90, 180, 90]
     );
     var val = f.value();
-    it('to be an array',function () {
+    it('to be an array', function() {
       expect(val.$notin).to.be.a('array');
     });
   });
 
-  describe('like',function () {
+  describe('like', function() {
     var f = filter().like('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$like).to.be.a('string');
     });
   });
 
-  describe('notLike',function () {
+  describe('notLike', function() {
     var f = filter().notLike('foo');
     var val = f.value();
-    it('to be a string',function () {
+    it('to be a string', function() {
       expect(val.$notlike).to.be.a('string');
     });
   });
 });
 
-describe('actions',function(){
-  describe('register',() => {
+describe('actions', function() {
+  describe('register', () => {
     it('an action', () => {
       var actionName = 'testAction';
       sc.action.registerAction('testAction');
@@ -141,8 +141,8 @@ describe('actions',function(){
     });
   });
 
-  describe('unregister',() => {
-    it('an action',() => {
+  describe('unregister', () => {
+    it('an action', () => {
       var actionName = 'testAction2';
       sc.action.registerAction(actionName);
       sc.action.unregisterAction(actionName);
