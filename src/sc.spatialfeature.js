@@ -3,19 +3,19 @@
 var _ = require('lodash');
 var uuid = require('uuid');
 
-var spatialFeature = function(storeId,obj) {
+var spatialFeature = function(storeId, obj) {
   var spatialFeature = {};
   var defaultObj = {
-    identifier : undefined,
-    date : new Date(),
-    createdAt : new Date(),
-    properties : {},
-    storeId : storeId,
-    style : {},
-    type : 'SPATIAL'
+    identifier: undefined,
+    date: new Date(),
+    createdAt: new Date(),
+    properties: {},
+    storeId: storeId,
+    style: {},
+    type: 'SPATIAL'
   };
 
-  spatialFeature = _.defaults(defaultObj,obj);
+  spatialFeature = _.defaults(defaultObj, obj);
 
   if (spatialFeature.identifier === undefined) {
     spatialFeature.identifier = uuid.v4();
