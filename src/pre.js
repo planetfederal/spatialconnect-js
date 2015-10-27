@@ -46,8 +46,18 @@ module.exports = (function() {
 			responseCallbacks[callbackId] = responseCallback
 			message['callbackId'] = callbackId
 		}
-		sendMessageQueue.push(message)
-		messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+		if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+		    sendMessageQueue.push(message)
+            messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+		} else if (navigator.userAgent.match(/Android/)) {
+            _WebViewJavascriptBridge._handleMessageFromJs(
+                typeof message.data === 'object' ? JSON.stringify(message.data) : (message.data || null),
+                message.responseId || null,
+                message.responseData || null,
+                message.callbackId || null,
+                message.handlerName || null
+            );
+		}
 	}
 
 	function _fetchQueue() {
@@ -99,13 +109,51 @@ module.exports = (function() {
 		}
 	}
 
+	function _dispatchMessageFromJava(messageJSON) {
+			var message = JSON.parse(messageJSON);
+			var messageHandler;
+
+			if (message.responseId) {
+				var responseCallback = responseCallbacks[message.responseId];
+				if (!responseCallback) { return; }
+				responseCallback(message.responseData);
+				delete responseCallbacks[message.responseId];
+			} else {
+				var responseCallback;
+				if (message.callbackId) {
+					var callbackResponseId = message.callbackId;
+					responseCallback = function(responseData) {
+						_doSend({ responseId: callbackResponseId, responseData: responseData });
+					};
+				}
+
+				var handler = WebViewJavascriptBridge._messageHandler;
+				if (message.handlerName) {
+					handler = messageHandlers[message.handlerName];
+				}
+				try {
+					handler(message.data, responseCallback);
+				} catch(exception) {
+					if (typeof console !== 'undefined') {
+						console.log("WebViewJavascriptBridge: WARNING: javascript handler threw.", message, exception);
+					}
+				}
+			}
+	}
+
+	function _handleMessageFromJava(messageJSON) {
+    console.log('recieved message from java: ' + messageJSON)
+		_dispatchMessageFromJava(messageJSON);
+	}
+
 	window.WebViewJavascriptBridge = {
 		init: init,
 		send: send,
 		registerHandler: registerHandler,
 		callHandler: callHandler,
 		_fetchQueue: _fetchQueue,
-		_handleMessageFromObjC: _handleMessageFromObjC
+		_handleMessageFromObjC: _handleMessageFromObjC,
+		_handleMessageFromJava: _handleMessageFromJava
 	}
 
 	var doc = document

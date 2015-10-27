@@ -117,11 +117,10 @@ var SpatialConnect = (function(){
     delete sc.action[actionName];
   };
 
-  sc.Filter = filter;
-  sc.gfeature = SCGeometry;
-  sc.feature = SCSpatialFeature;
-  sc.Commands = Commands;
-  return sc;
+  return {
+    action: sc.action,
+    stream: sc.stream
+  };
 })();
 
 module.exports = SpatialConnect;
