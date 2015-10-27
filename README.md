@@ -1,5 +1,5 @@
 # SpatialConnect Javascript Library for Android & iOS
-
+[![Build Status](https://travis-ci.org/tetriscode/spatialconnect-js.svg?branch=dev)](https://travis-ci.org/tetriscode/spatialconnect-js)
 ## Getting Started
 
 ### Pull down dependencies
