@@ -25,6 +25,7 @@ var SpatialConnect = (function() {
   sc.stream.spatialQuery = new Rx.Subject();
   sc.stream.stores = new Rx.Subject();
   sc.stream.store = new Rx.Subject();
+  sc.stream.createFeature = new Rx.Subject();
 
   connectWebViewJavascriptBridge(function(bridge) {
     bridge.init(function(message, responseCallback) {
@@ -37,6 +38,7 @@ var SpatialConnect = (function() {
     bridge.registerHandler('spatialQuery', (data) => sc.stream.spatialQuery.onNext(data));
     bridge.registerHandler('storesList', (data) => sc.stream.stores.onNext(data));
     bridge.registerHandler('store', (data) => sc.stream.store.onNext(data));
+    bridge.registerHandler('createFeature', (data) => sc.stream.createFeature.onNext(data));
   });
 
   sc.action = {};
