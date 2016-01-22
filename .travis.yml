@@ -2,4 +2,4 @@ language: node_js
 node_js:
   - "iojs"
 
-before_script: npm run build-dist
+before_script: npm run build
