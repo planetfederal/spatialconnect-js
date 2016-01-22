@@ -25,7 +25,31 @@ npm run build-dist
 npm install <path to project>/spatialconnect-js
 ```
 
-## From NPM 
+## Communicating with the Bridge
+
+For iOS, JSON objects are sent to the SpatialConnect native library, and for Android, JSON is stringified and sent to the SpatialConnect native library. This is automatically detected in the library by using the user agent for each platform. The envelope for each message is as follows:
+
 ```
-npm install spatialconnect
+{
+  "action":<integer>,
+  "payload":<JSON Object>
+}
 ```
+
+### Available Actions
+```
+DATASERVICE_ACTIVESTORESLIST = 100
+DATASERVICE_ACTIVESTOREBYID = 101
+DATASERVICE_SPATIALQUERY = 110
+DATASERVICE_SPATIALQUERYALL = 111
+DATASERVICE_GEOSPATIALQUERY = 112
+DATASERVICE_GEOSPATIALQUERYALL = 113
+DATASERVICE_CREATEFEATURE = 114
+DATASERVICE_UPDATEFEATURE = 115
+DATASERVICE_DELETEFEATURE = 116
+SENSORSERVICE_GPS = 200
+```
+These integer codes are bidirectional and are the same across platforms. 
+
+### SpatialData Transmission
+For sending and receiving geospatial data, the transmission format is using OpenLayers 3 to do format transformation to GeoJSON.
