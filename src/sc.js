@@ -81,7 +81,8 @@ var SpatialConnect = (function(){
       payload : payload
     }
   );
-  sc.action.createFeature = (featureObj) => window.WebViewJavascriptBridge.send(
+  sc.action.createFeature = (featureObj,storeId) => window.WebViewJavascriptBridge.send(
+    featureObj.storeId = storeId;
     {
       action : Commands.DATASERVICE_CREATEFEATURE,
       payload : { feature : featureObj }
