@@ -56,7 +56,7 @@ var SpatialConnect = (function() {
     payload: {
       storeId: storeId
     }
-  );
+  });
   sc.action.createFeature = (featureObj,storeId) => {
     featureObj.storeId = storeId;
     window.WebViewJavascriptBridge.send({
