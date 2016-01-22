@@ -17,7 +17,7 @@ npm run test
 ### Build distribution file
 
 ```
-npm run build-dist
+npm run build
 ```
 
 ## Using in your project
