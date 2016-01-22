@@ -82,12 +82,13 @@ var SpatialConnect = (function() {
     action: action,
     payload: payload
   });
-  sc.action.createFeature = (featureObj) => window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_CREATEFEATURE,
-    payload: {
-      feature: featureObj
-    }
-  });
+  sc.action.createFeature = (featureObj,storeId) => {
+    featureObj.storeId = storeId;
+    window.WebViewJavascriptBridge.send({
+      action : Commands.DATASERVICE_CREATEFEATURE,
+      payload : { feature : featureObj }
+    });
+  };
   sc.action.updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
     action: Commands.DATASERVICE_UPDATEFEATURE,
     payload: {
