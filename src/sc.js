@@ -56,7 +56,14 @@ var SpatialConnect = (function() {
     payload: {
       storeId: storeId
     }
-  });
+  );
+  sc.action.createFeature = (featureObj,storeId) => window.WebViewJavascriptBridge.send(
+    featureObj.storeId = storeId;
+    {
+      action : Commands.DATASERVICE_CREATEFEATURE,
+      payload : { feature : featureObj }
+    }
+  );
   sc.action.spatialQuery = (filter, storeId) => window.WebViewJavascriptBridge.send({
     action: storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY,
     payload: {
