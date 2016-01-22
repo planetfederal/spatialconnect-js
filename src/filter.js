@@ -94,10 +94,10 @@ module.exports = function() {
    * @param {string/value} upper
    * @param {string/value} lower
    */
-  returnObject.between = (upper,lower) => {
+  returnObject.between = (upper, lower) => {
     filter.$between = {
-      upper : upper,
-      lower : lower
+      upper: upper,
+      lower: lower
     };
     return returnObject;
   };
@@ -109,10 +109,10 @@ module.exports = function() {
    * @param {string/value} upper
    * @param {string/value} lower
    */
-  returnObject.notBetween = (upper,lower) => {
+  returnObject.notBetween = (upper, lower) => {
     filter.$notbetween = {
-      upper : upper,
-      lower : lower
+      upper: upper,
+      lower: lower
     };
     return returnObject;
   };
