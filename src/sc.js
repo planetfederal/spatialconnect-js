@@ -59,12 +59,13 @@ var SpatialConnect = (function() {
       storeId: storeId
     }
   });
-  sc.action.createFeature = (featureObj,storeId) => {
+  sc.action.createFeature = (featureObj, storeId, layerId) => {
     window.WebViewJavascriptBridge.send({
       action : Commands.DATASERVICE_CREATEFEATURE,
       payload : {
         feature : featureObj,
-        storeId : storeId
+        storeId : storeId,
+        layerId : layerId
       }
     });
   };
