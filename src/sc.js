@@ -83,8 +83,8 @@ var SpatialConnect = (function() {
       storeId: storeId
     }
   });
-  sc.action.sendMessage = (action, payload) => window.WebViewJavascriptBridge.send({
-    action: action,
+  sc.action.sendMessage = (actionId, payload) => window.WebViewJavascriptBridge.send({
+    action: actionId,
     payload: payload
   });
   sc.action.updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
@@ -101,8 +101,8 @@ var SpatialConnect = (function() {
     action: actionCmdId,
     payload: payload
   });
-  sc.action.registerAction = (actionName, actionCmdInt, fn) => {
-    sc.action[actionName] = (action, payload) => {
+  sc.action.registerAction = (actionName, actionCmdInt) => {
+    sc.action[actionName] = (payload) => {
       window.WebViewJavascriptBridge.send({
         action: actionCmdInt,
         payload: payload
