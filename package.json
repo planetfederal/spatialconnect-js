@@ -1,0 +1,48 @@
+{
+  "name": "spatialconnect",
+  "version": "0.1.0",
+  "description": "Javascript Library for Spatial Connect",
+  "main": "dist/spatialconnect.js",
+  "scripts": {
+    "prebuild": "rimraf dist && rimraf build",
+    "build": "npm run build-es6",
+    "build-es6": "webpack",
+    "test": "mocha-phantomjs test/index.html",
+    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boundlessgeo/spatialconnect-js"
+  },
+  "author": "Wes Richardet <wrichardet@boundlessgeo.com> (http://boundlessgeo.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/boundlessgeo/spatialconnect-js/issues"
+  },
+  "homepage": "https://github.com/boundlessgeo/spatialconnect-js",
+  "dependencies": {
+    "lodash": "3.10.1",
+    "openlayers": "3.9.0",
+    "rx": "3.1.2",
+    "uuid": "2.0.1"
+  },
+  "devDependencies": {
+    "babel": "5.8.23",
+    "babel-core": "5.8.24",
+    "babel-loader": "5.3.2",
+    "babelify": "7.2.0",
+    "chai": "3.3.0",
+    "commitizen": "1.0.4",
+    "cz-conventional-changelog": "1.1.2",
+    "mocha": "2.3.3",
+    "mocha-phantomjs": "4.0.1",
+    "require": "2.4.20",
+    "rimraf": "2.5.0",
+    "webpack": "1.12.1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}
