@@ -2,4 +2,8 @@ language: node_js
 node_js:
   - "iojs"
 
+notifications:
+  email:
+      - spatialconnect@boundlessgeo.com
+
 before_script: npm run build
