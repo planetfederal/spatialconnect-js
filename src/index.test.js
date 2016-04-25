@@ -4,7 +4,9 @@
 
 var expect = require('chai').expect;
 var filter = require('./filter');
+var pre = require('./pre');
 var sc = require('./sc');
+pre();
 
 var isArray = function(a) {
   return Array.isArray(a);

@@ -20,10 +20,16 @@ module.exports = {
     'ol': 'openlayers'
   },
   module: {
-    loaders: [{
-      test: /\.js?$/,
-      exclude: /(node_modules)/,
-      loader: 'babel'
-    }]
+    loaders: [
+      {
+        test: /\.js?$/,
+        exclude: /(node_modules)/,
+        loader: 'babel'
+      }, {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
+    ]
   }
 };
