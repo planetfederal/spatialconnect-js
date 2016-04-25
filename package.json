@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/boundlessgeo/spatialconnect-js",
   "dependencies": {
+    "jsdom-jscore": "https://github.com/frankrowe/jsdom-jscore.git",
     "lodash": "3.10.1",
     "openlayers": "3.9.0",
     "rx": "3.1.2",
+    "stream": "0.0.2",
     "uuid": "2.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,10 @@
 'use strict';
 var spatialFeature = require('./sc.spatialfeature');
-var ol = require('openlayers');
+if (typeof document === 'undefined') {
+  var jsdom = require('jsdom-jscore');
+  window.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+  window.Image = function() {};
+}
 var _ = require('lodash');
 
 var scGeospatialFeature = function(geometry, storeId, spatialfeature) {

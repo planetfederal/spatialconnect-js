@@ -40,7 +40,11 @@ module.exports = (function() {
   }
 
   function registerHandler(handlerName, handler) {
-    messageHandlers[handlerName] = handler;
+    if (navigator.product.match(/ReactNative/)) {
+      require('react-native').NativeAppEventEmitter.addListener(handlerName, handler);
+    } else {
+      messageHandlers[handlerName] = handler;
+    }
   }
 
   function callHandler(handlerName, data, responseCallback) {
@@ -67,6 +71,8 @@ module.exports = (function() {
         message.callbackId || null,
         message.handlerName || null
       );
+    } else if (navigator.product.match(/ReactNative/)) {
+      require('react-native').NativeModules.SCJavascript.handler(message);
     }
   }
 
@@ -176,12 +182,14 @@ module.exports = (function() {
     _handleMessageFromJava: _handleMessageFromJava
   }
 
-  var doc = document;
-  _createQueueReadyIframe(doc);
-  var readyEvent = doc.createEvent('Events');
-  readyEvent.initEvent('WebViewJavascriptBridgeReady');
-  readyEvent.bridge = WebViewJavascriptBridge;
-  doc.dispatchEvent(readyEvent);
+  if (!navigator.product.match(/ReactNative/)) {
+    var doc = document;
+    _createQueueReadyIframe(doc);
+    var readyEvent = doc.createEvent('Events');
+    readyEvent.initEvent('WebViewJavascriptBridgeReady');
+    readyEvent.bridge = WebViewJavascriptBridge;
+    doc.dispatchEvent(readyEvent);
+  }
 
   return {};
 
