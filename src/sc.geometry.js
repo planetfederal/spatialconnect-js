@@ -6,6 +6,7 @@ if (typeof document === 'undefined') {
   window.Image = function() {};
 }
 var _ = require('lodash');
+var ol = require('openlayers');
 
 var scGeospatialFeature = function(geometry, storeId, spatialfeature) {
   var scGeometry = {};

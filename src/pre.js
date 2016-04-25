@@ -62,7 +62,9 @@ module.exports = function() {
       responseCallbacks[callbackId] = responseCallback;
       message['callbackId'] = callbackId;
     }
-    if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+    if (navigator.product.match(/ReactNative/)) {
+      require('react-native').NativeModules.SCBridge.handler(message);
+    } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
     } else if (navigator.userAgent.match(/Android/)) {
@@ -73,8 +75,6 @@ module.exports = function() {
         message.callbackId || null,
         message.handlerName || null
       );
-    } else if (navigator.product.match(/ReactNative/)) {
-      require('react-native').NativeModules.SCJavascript.handler(message);
     }
   }
 
