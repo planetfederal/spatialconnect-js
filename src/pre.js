@@ -1,5 +1,7 @@
 'use strict';
-module.exports = (function() {
+/*global WebViewJavascriptBridge*/
+/*global _WebViewJavascriptBridge*/
+module.exports = function() {
   if (window.WebViewJavascriptBridge) {
     return;
   }
@@ -79,7 +81,6 @@ module.exports = (function() {
   function _dispatchMessageFromObjC(messageJSON) {
     setTimeout(function _timeoutDispatchMessageFromObjC() {
       var message = JSON.parse(messageJSON);
-      var messageHandler;
       var responseCallback;
 
       if (message.responseId) {
@@ -97,7 +98,7 @@ module.exports = (function() {
               responseId: callbackResponseId,
               responseData: responseData
             });
-          }
+          };
         }
 
         var handler = WebViewJavascriptBridge._messageHandler;
@@ -109,7 +110,7 @@ module.exports = (function() {
           handler(message.data, responseCallback);
         } catch (exception) {
           if (typeof console != 'undefined') {
-            console.log("WebViewJavascriptBridge: WARNING: javascript handler threw.", message, exception);
+            console.log('WebViewJavascriptBridge: WARNING: javascript handler threw.', message, exception);
           }
         }
       }
@@ -126,17 +127,15 @@ module.exports = (function() {
 
   function _dispatchMessageFromJava(messageJSON) {
     var message = JSON.parse(messageJSON);
-    var messageHandler;
-
+    var responseCallback;
     if (message.responseId) {
-      var responseCallback = responseCallbacks[message.responseId];
+      responseCallback = responseCallbacks[message.responseId];
       if (!responseCallback) {
         return;
       }
       responseCallback(message.responseData);
       delete responseCallbacks[message.responseId];
     } else {
-      var responseCallback;
       if (message.callbackId) {
         var callbackResponseId = message.callbackId;
         responseCallback = function(responseData) {
@@ -155,14 +154,14 @@ module.exports = (function() {
         handler(message.data, responseCallback);
       } catch (exception) {
         if (typeof console !== 'undefined') {
-          console.log("WebViewJavascriptBridge: WARNING: javascript handler threw.", message, exception);
+          console.log('WebViewJavascriptBridge: WARNING: javascript handler threw.', message, exception);
         }
       }
     }
   }
 
   function _handleMessageFromJava(messageJSON) {
-    console.log('recieved message from java: ' + messageJSON)
+    console.log('recieved message from java: ' + messageJSON);
     _dispatchMessageFromJava(messageJSON);
   }
 
@@ -174,7 +173,7 @@ module.exports = (function() {
     _fetchQueue: _fetchQueue,
     _handleMessageFromObjC: _handleMessageFromObjC,
     _handleMessageFromJava: _handleMessageFromJava
-  }
+  };
 
   var doc = document;
   _createQueueReadyIframe(doc);
@@ -185,4 +184,4 @@ module.exports = (function() {
 
   return {};
 
-})();
+};
