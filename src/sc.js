@@ -2,10 +2,6 @@
 /*global WebViewJavascriptBridge*/
 var Rx = require('rx');
 var Commands = require('./commands');
-var filter = require('./filter');
-var SCSpatialFeature = require('./sc.spatialfeature.js');
-var SCGeometry = require('./sc.geometry');
-var pre = require('./pre');
 
 var SpatialConnect = (function() {
   var sc = {};
