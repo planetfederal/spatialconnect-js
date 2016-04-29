@@ -10,14 +10,9 @@ module.exports = {
     libraryTarget: 'umd',
     filename: './dist/[name].js'
   },
-  /*  entry : './src/index.js',
-    output : {
-      library : 'spatialconnect',
-      libraryTarget : 'commonjs2',
-      filename : './dist/spatialconnect.js'
-    },*/
   externals: {
-    'ol': 'openlayers'
+    'ol': 'openlayers',
+    'react-native': 'react-native'
   },
   module: {
     loaders: [
