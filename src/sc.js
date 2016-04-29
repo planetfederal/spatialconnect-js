@@ -2,8 +2,10 @@
 /*global WebViewJavascriptBridge*/
 var Rx = require('rx');
 var Commands = require('./commands');
+var pre = require('./pre');
 
 var SpatialConnect = (function() {
+  pre(); //initalize bridge
   var sc = {};
 
   var connectWebViewJavascriptBridge = function(callback) {
