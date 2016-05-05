@@ -43,7 +43,10 @@ module.exports = function() {
 
   function registerHandler(handlerName, handler) {
     if (navigator.product.match(/ReactNative/)) {
+      // for ios devices
       require('react-native').NativeAppEventEmitter.addListener(handlerName, handler);
+      // for android devices
+      require('react-native').DeviceEventEmitter.addListener(handlerName, handler);
     } else {
       messageHandlers[handlerName] = handler;
     }
