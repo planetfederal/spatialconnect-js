@@ -1,6 +1,6 @@
 'use strict';
 
-var commands = {
+export default {
   DATASERVICE_ACTIVESTORESLIST: 100,
   DATASERVICE_ACTIVESTOREBYID: 101,
   DATASERVICE_SPATIALQUERY: 110,
@@ -12,5 +12,3 @@ var commands = {
   DATASERVICE_DELETEFEATURE: 116,
   SENSORSERVICE_GPS: 200
 };
-
-module.exports = commands;

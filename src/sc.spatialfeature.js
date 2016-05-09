@@ -1,9 +1,9 @@
 'use strict';
 
-var _ = require('lodash');
-var uuid = require('uuid');
+import * as _ from 'lodash';
+import uuid from 'uuid';
 
-var spatialFeature = function(storeId, obj) {
+export function spatialFeature(storeId, obj) {
   var spatialFeature = {};
   var defaultObj = {
     identifier: undefined,
@@ -35,7 +35,4 @@ var spatialFeature = function(storeId, obj) {
     return obj;
   };
   return spatialFeature;
-};
-
-
-module.exports = spatialFeature;
+}

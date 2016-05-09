@@ -1,8 +1,9 @@
 'use strict';
-var spatialFeature = require('./sc.spatialfeature');
-var _ = require('lodash');
 
-var scGeospatialFeature = function(gj, storeId, spatialfeature) {
+import spatialFeature from './sc.spatialfeature';
+import * as _ from 'lodash';
+
+export default function(gj, storeId, spatialfeature) {
   var scGeometry = {};
   Object.setPrototypeOf(scGeometry, spatialFeature(storeId, spatialfeature));
 
@@ -13,6 +14,4 @@ var scGeospatialFeature = function(gj, storeId, spatialfeature) {
   };
 
   return scGeometry;
-};
-
-module.exports = scGeospatialFeature;
+}
