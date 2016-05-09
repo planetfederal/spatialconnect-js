@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function() {
+export default function() {
   var filter = Object.create(null);
   var returnObject = {};
 
@@ -168,4 +168,4 @@ module.exports = function() {
     return filter;
   };
   return returnObject;
-};
+}

@@ -1,11 +1,11 @@
 'use strict';
 /*global WebViewJavascriptBridge*/
-var Rx = require('rx');
-var Commands = require('./commands');
-var pre = require('./pre');
+import Rx from 'rx';
+import Commands from './commands';
+import { initialize } from './bridge.js';
 
-var SpatialConnect = (function() {
-  pre(); //initalize bridge
+export default (function() {
+  initialize(); //initalize bridge
   var sc = {};
 
   var connectWebViewJavascriptBridge = function(callback) {
@@ -116,5 +116,3 @@ var SpatialConnect = (function() {
     stream: sc.stream
   };
 })();
-
-module.exports = SpatialConnect;

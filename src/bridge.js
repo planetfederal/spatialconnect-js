@@ -1,7 +1,13 @@
 'use strict';
 /*global WebViewJavascriptBridge*/
 /*global _WebViewJavascriptBridge*/
-module.exports = function() {
+import {
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
+  NativeModules
+} from 'react-native';
+
+export function initialize() {
   if (window.WebViewJavascriptBridge) {
     return;
   }
@@ -44,9 +50,9 @@ module.exports = function() {
   function registerHandler(handlerName, handler) {
     if (navigator.product.match(/ReactNative/)) {
       // for ios devices
-      require('react-native').NativeAppEventEmitter.addListener(handlerName, handler);
+      NativeAppEventEmitter.addListener(handlerName, handler);
       // for android devices
-      require('react-native').DeviceEventEmitter.addListener(handlerName, handler);
+      DeviceEventEmitter.addListener(handlerName, handler);
     } else {
       messageHandlers[handlerName] = handler;
     }
@@ -66,7 +72,7 @@ module.exports = function() {
       message['callbackId'] = callbackId;
     }
     if (navigator.product.match(/ReactNative/)) {
-      require('react-native').NativeModules.SCBridge.handler(message);
+      NativeModules.SCBridge.handler(message);
     } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
@@ -195,4 +201,4 @@ module.exports = function() {
 
   return {};
 
-};
+}
