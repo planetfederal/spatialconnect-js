@@ -2,11 +2,12 @@
 /*globals describe:false*/
 /*globals it:false*/
 
-var expect = require('chai').expect;
-var filter = require('./filter');
-var pre = require('./pre');
-var sc = require('./sc');
-pre();
+import { expect } from 'chai';
+import filter from './filter';
+import { initialize } from './bridge';
+import sc from './core';
+
+initialize();
 
 var isArray = function(a) {
   return Array.isArray(a);

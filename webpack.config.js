@@ -11,7 +11,6 @@ module.exports = {
     filename: './dist/[name].js'
   },
   externals: {
-    'ol': 'openlayers',
     'react-native': 'react-native'
   },
   module: {
