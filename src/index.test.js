@@ -5,7 +5,6 @@
 import { expect } from 'chai';
 import filter from './filter';
 import { initialize } from './bridge';
-import sc from './core';
 
 initialize();
 
@@ -131,25 +130,6 @@ describe('filter', function() {
     var val = f.value();
     it('to be a string', function() {
       expect(val.$notlike).to.be.a('string');
-    });
-  });
-});
-
-describe('actions', function() {
-  describe('register', () => {
-    it('an action', () => {
-      var actionName = 'testAction';
-      sc.action.registerAction('testAction');
-      expect(sc.action[actionName]).to.not.throw(Error);
-    });
-  });
-
-  describe('unregister', () => {
-    it('an action', () => {
-      var actionName = 'testAction2';
-      sc.action.registerAction(actionName);
-      sc.action.unregisterAction(actionName);
-      expect(sc.action[actionName]).to.be.undefined;
     });
   });
 });
