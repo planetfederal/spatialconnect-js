@@ -4,9 +4,10 @@
   "description": "Javascript Library for Spatial Connect",
   "main": "dist/spatialconnect.js",
   "scripts": {
-    "prebuild": "rimraf dist && rimraf build",
-    "build": "npm run build-es6",
+    "prebuild": "rimraf dist && rimraf native",
+    "build": "npm run build-es6 && npm run build-native",
     "build-es6": "webpack",
+    "build-native": "webpack --config webpack.native.js",
     "test": "mocha-phantomjs test/index.html",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch"
   },
@@ -30,7 +31,7 @@
     "babel": "^6.5.2",
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
-    "babel-preset-react-native-stage-0": "^1.0.1",
+    "babel-preset-es2015": "^1.0.1",
     "babel-register": "^6.8.0",
     "babelify": "7.2.0",
     "chai": "3.3.0",

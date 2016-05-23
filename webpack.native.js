@@ -1,19 +1,17 @@
 var path = require('path');
 
+
 module.exports = {
   entry: {
-    spatialconnect: './src/index.js',
-    test : './src/index.test.js'
+    './native/index': './src/index.js'
   },
   output: {
     library: 'spatialconnect',
     libraryTarget: 'umd',
-    filename: './dist/[name].js'
+    filename: '[name].js'
   },
-  resolve: {
-    alias: {
-      'react-native': './react-native-mock'
-    }
+  externals: {
+    'react-native': 'react-native'
   },
   module: {
     loaders: [
