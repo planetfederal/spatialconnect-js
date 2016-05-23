@@ -6,8 +6,11 @@ node_modules/
 # Other files and folders
 .settings/
 test.js
-dist/spatialconnect.js
-native/index.js
+.babelrc
+.eslintrc.js
+.travis.yml
+webpack.config.js
+src/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
