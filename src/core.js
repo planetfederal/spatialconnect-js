@@ -20,6 +20,7 @@ let lastKnownLocationSubject = new Rx.Subject();
 let querySubject = new Rx.Subject();
 let storeSubject = new Rx.Subject();
 let createFeatureSubject = new Rx.Subject();
+let formSubject = new Rx.Subject();
 
 connectWebViewJavascriptBridge(function (bridge) {
   bridge.init(function (message, responseCallback) {
@@ -32,14 +33,11 @@ connectWebViewJavascriptBridge(function (bridge) {
   bridge.registerHandler('spatialQuery', (data) => querySubject.onNext(data));
   bridge.registerHandler('storesList', (data) => storeSubject.onNext(data));
   bridge.registerHandler('createFeature', (data) => createFeatureSubject.onNext(data));
+  bridge.registerHandler('formsList', (data) => formSubject.onNext(data));
 });
 
 const startAllServices = () => window.WebViewJavascriptBridge.send({
   action: Commands.START_ALL_SERVICES
-});
-
-const loadDefaultConfigs = () => window.WebViewJavascriptBridge.send({
-  action: Commands.LOAD_DEFAULT_CONFIGS
 });
 
 const enableGPS = () => window.WebViewJavascriptBridge.send({
@@ -64,21 +62,25 @@ const stores = () => {
   return storeSubject;
 };
 
+const forms = () => {
+  window.WebViewJavascriptBridge.send({
+    action: Commands.DATASERVICE_FORMSLIST
+  });
+  return formSubject;
+};
+
 const store = (storeId) => {
   return stores()
-    //TODO: do we want to send an object with a stores array from stores()
     .flatMap(data => Rx.Observable.from(data.stores))
     .filter(store => store.storeId === storeId)
     .first();
 };
 
-const createFeature = (featureObj, storeId, layerId) => {
+const createFeature = (featureObj) => {
   window.WebViewJavascriptBridge.send({
     action: Commands.DATASERVICE_CREATEFEATURE,
     payload: {
-      feature: featureObj,
-      storeId: storeId,
-      layerId: layerId
+      feature: featureObj
     }
   });
   return createFeatureSubject;
@@ -127,11 +129,11 @@ const sendMessage = (actionId, payload) => window.WebViewJavascriptBridge.send({
 
 export {
   startAllServices,
-  loadDefaultConfigs,
   enableGPS,
   disableGPS,
   lastKnownLocation,
   stores,
+  forms,
   store,
   createFeature,
   updateFeature,
