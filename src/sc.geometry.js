@@ -3,9 +3,9 @@
 import spatialFeature from './sc.spatialfeature';
 import * as _ from 'lodash';
 
-export default function(gj, storeId, spatialfeature) {
+export default function(gj, storeId, layerId, spatialfeature) {
   var scGeometry = {};
-  Object.setPrototypeOf(scGeometry, spatialFeature(storeId, spatialfeature));
+  Object.setPrototypeOf(scGeometry, spatialFeature(storeId, layerId, spatialfeature));
 
   scGeometry.serialize = function() {
     var baseFeature = Object.getPrototypeOf(this).serialize();
