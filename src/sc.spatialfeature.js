@@ -12,7 +12,7 @@ export function spatialFeature(storeId, obj) {
     properties: {},
     storeId: storeId,
     style: {},
-    type: 'FEATURE'
+    type: 'Feature'
   };
 
   spatialFeature = _.defaults(defaultObj, obj);
