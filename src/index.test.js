@@ -3,7 +3,9 @@
 /*globals it:false*/
 
 import { expect } from 'chai';
-import filter from './filter';
+import * as filter from './filter';
+import { spatialFeature } from './sc.spatialfeature';
+import { geometry } from './sc.geometry';
 import { initialize } from './bridge';
 
 initialize();
@@ -14,122 +16,168 @@ var isArray = function(a) {
 
 describe('filter', function() {
   describe('geoBBOXContains', function() {
-    var f = filter().geoBBOXContains(
+    var f = filter.geoBBOXContains(
       [-180, -90, 180, 90]
     );
-    var val = f.value();
     it('to be an array', function() {
-      expect(val.$geocontains).to.be.a('array');
+      expect(f.$geocontains).to.be.a('array');
     });
   });
 
   describe('geoBBOXDisjoint', function() {
-    var f = filter().geoBBOXContains(
+    var f = filter.geoBBOXContains(
       [-180, -90, 180, 90]
     );
-    var val = f.value();
     it('to be an array', function() {
-      expect(val.$geocontains).to.satisfy(isArray);
+      expect(f.$geocontains).to.satisfy(isArray);
     });
   });
 
   describe('greaterThan', function() {
-    var f = filter().greaterThan('foo');
-    var val = f.value();
+    var f = filter.greaterThan('foo');
     it('to be a string', function() {
-      expect(val.$gt).to.be.a('string');
+      expect(f.$gt).to.be.a('string');
     });
   });
 
   describe('greaterThanOrEqual', function() {
-    var f = filter().greaterThanOrEqual('foo');
-    var val = f.value();
+    var f = filter.greaterThanOrEqual('foo');
     it('to be a string', function() {
-      expect(val.$gte).to.be.a('string');
+      expect(f.$gte).to.be.a('string');
     });
   });
 
   describe('lessThan', function() {
-    var f = filter().lessThan('foo');
-    var val = f.value();
+    var f = filter.lessThan('foo');
     it('to be a string', function() {
-      expect(val.$lt).to.be.a('string');
+      expect(f.$lt).to.be.a('string');
     });
   });
 
   describe('lessThanOrEqual', function() {
-    var f = filter().lessThanOrEqual('foo');
-    var val = f.value();
+    var f = filter.lessThanOrEqual('foo');
     it('to be a string', function() {
-      expect(val.$lte).to.be.a('string');
+      expect(f.$lte).to.be.a('string');
     });
   });
 
   describe('equal', function() {
-    var f = filter().equal('foo');
-    var val = f.value();
+    var f = filter.equal('foo');
     it('to be a string', function() {
-      expect(val.$e).to.be.a('string');
+      expect(f.$e).to.be.a('string');
     });
   });
 
   describe('notEqual', function() {
-    var f = filter().notEqual('foo');
-    var val = f.value();
+    var f = filter.notEqual('foo');
     it('to be a string', function() {
-      expect(val.$ne).to.be.a('string');
+      expect(f.$ne).to.be.a('string');
     });
   });
 
   describe('between', function() {
-    var f = filter().between('foo', 'foo2');
-    var val = f.value();
+    var f = filter.between('foo', 'foo2');
     it('to be an object', function() {
-      expect(val.$between).to.be.a('object');
+      expect(f.$between).to.be.a('object');
     });
   });
 
   describe('notBetween', function() {
-    var f = filter().notBetween('foo', 'foo2');
-    var val = f.value();
+    var f = filter.notBetween('foo', 'foo2');
     it('to be an object', function() {
-      expect(val.$notbetween).to.be.a('object');
+      expect(f.$notbetween).to.be.a('object');
     });
   });
 
   describe('in', function() {
-    var f = filter().in(
+    var f = filter.isIn(
       [-180, -90, 180, 90]
     );
-    var val = f.value();
     it('to be an array', function() {
-      expect(val.$in).to.be.a('array');
+      expect(f.$in).to.be.a('array');
     });
   });
 
   describe('notIn', function() {
-    var f = filter().notIn(
+    var f = filter.notIn(
       [-180, -90, 180, 90]
     );
-    var val = f.value();
     it('to be an array', function() {
-      expect(val.$notin).to.be.a('array');
+      expect(f.$notin).to.be.a('array');
     });
   });
 
   describe('like', function() {
-    var f = filter().like('foo');
-    var val = f.value();
+    var f = filter.like('foo');
     it('to be a string', function() {
-      expect(val.$like).to.be.a('string');
+      expect(f.$like).to.be.a('string');
     });
   });
 
   describe('notLike', function() {
-    var f = filter().notLike('foo');
-    var val = f.value();
+    var f = filter.notLike('foo');
     it('to be a string', function() {
-      expect(val.$notlike).to.be.a('string');
+      expect(f.$notlike).to.be.a('string');
     });
+  });
+});
+
+describe('sc.spatialfeature', function() {
+  var sf = spatialFeature('storeId', 'layerId', { foo: 'bar' });
+  it('to be a spatialFeature', function() {
+    expect(sf.properties).to.be.a('object');
+    expect(sf.id).to.be.a('string');
+    expect(sf.type).to.be.a('string');
+    expect(sf.storeId).to.be.a('string');
+    expect(sf.layerId).to.be.a('string');
+    expect(sf.properties).to.be.a('object');
+    expect(sf.properties.foo).to.equal('bar');
+    expect(sf.date).to.exist;
+    expect(sf.createdAt).to.exist;
+    expect(sf.style).to.be.a('object');
+  });
+});
+
+describe('sc.geometry', function() {
+  var gj = {
+    properties: {
+      foo: 'bar'
+    },
+    geometry: {
+      type: 'Point',
+      coordinates: [12, 34]
+    }
+  };
+  var g = geometry('storeId', 'layerId', gj);
+
+  it('to be a geometry', function() {
+    expect(g.properties).to.be.a('object');
+    expect(g.id).to.be.a('string');
+    expect(g.type).to.be.a('string');
+    expect(g.storeId).to.be.a('string');
+    expect(g.layerId).to.be.a('string');
+    expect(g.properties).to.be.a('object');
+    expect(g.date).to.exist;
+    expect(g.createdAt).to.exist;
+    expect(g.style).to.be.a('object');
+    expect(g.geometry).to.be.a('object');
+  });
+
+  it('to handle null properties', function() {
+    var gj = {
+      geometry: {
+        type: 'Point',
+        coordinates: [12, 34]
+      }
+    };
+    var g = geometry('storeId', 'layerId', gj);
+    expect(g.properties).to.be.a('object');
+  });
+
+  it('to handle null geometry', function() {
+    var gj = {
+    };
+    var g = geometry('storeId', 'layerId', gj);
+    expect(g.geometry).to.equal(null);
   });
 });

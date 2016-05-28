@@ -3,10 +3,13 @@
 import * as _ from 'lodash';
 import uuid from 'uuid';
 
-export function spatialFeature(storeId, layerId, obj) {
+export function spatialFeature(storeId, layerId, featureProps) {
+  if (layerId === undefined) {
+    throw 'layerId must be defined for all spatial features.';
+  }
   var spatialFeature = {};
   var defaultObj = {
-    identifier: undefined,
+    id: uuid.v4(),
     date: new Date(),
     createdAt: new Date(),
     properties: {},
@@ -16,18 +19,11 @@ export function spatialFeature(storeId, layerId, obj) {
     type: 'Feature'
   };
 
-  spatialFeature = _.defaults(defaultObj, obj);
+  spatialFeature = _.defaults({ properties: featureProps }, defaultObj);
 
-  if (spatialFeature.identifier === undefined) {
-    spatialFeature.identifier = uuid.v4();
-  }
-
-  if (spatialFeature.storeId === undefined) {
-    throw 'spatialFeature.storeId must be set explicitly';
-  }
   spatialFeature.serialize = function() {
     var obj = {};
-    obj.id = this.identifier;
+    obj.id = this.id;
     obj.type = this.type;
     obj.storeId = this.storeId;
     obj.layerId = this.layerId;
