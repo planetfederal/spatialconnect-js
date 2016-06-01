@@ -1,7 +1,6 @@
 'use strict';
 
 import * as _ from 'lodash';
-import uuid from 'uuid';
 
 export function spatialFeature(storeId, layerId, featureProps) {
   if (layerId === undefined) {
@@ -9,7 +8,6 @@ export function spatialFeature(storeId, layerId, featureProps) {
   }
   var spatialFeature = {};
   var defaultObj = {
-    id: uuid.v4(),
     date: new Date(),
     createdAt: new Date(),
     properties: {},
@@ -23,7 +21,6 @@ export function spatialFeature(storeId, layerId, featureProps) {
 
   spatialFeature.serialize = function() {
     var obj = {};
-    obj.id = this.id;
     obj.type = this.type;
     obj.storeId = this.storeId;
     obj.layerId = this.layerId;
