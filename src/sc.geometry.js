@@ -15,7 +15,6 @@ export function geometry(storeId, layerId, gj) {
 
   scGeometry.serialize = function() {
     var obj = {};
-    obj.id = this.id;
     obj.type = this.type;
     obj.storeId = this.storeId;
     obj.layerId = this.layerId;
