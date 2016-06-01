@@ -126,7 +126,6 @@ describe('sc.spatialfeature', function() {
   var sf = spatialFeature('storeId', 'layerId', { foo: 'bar' });
   it('to be a spatialFeature', function() {
     expect(sf.properties).to.be.a('object');
-    expect(sf.id).to.be.a('string');
     expect(sf.type).to.be.a('string');
     expect(sf.storeId).to.be.a('string');
     expect(sf.layerId).to.be.a('string');
@@ -152,7 +151,6 @@ describe('sc.geometry', function() {
 
   it('to be a geometry', function() {
     expect(g.properties).to.be.a('object');
-    expect(g.id).to.be.a('string');
     expect(g.type).to.be.a('string');
     expect(g.storeId).to.be.a('string');
     expect(g.layerId).to.be.a('string');
