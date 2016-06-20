@@ -1,9 +1,10 @@
 {
   "name": "spatialconnect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Javascript Library for Spatial Connect",
   "main": "dist/spatialconnect.js",
   "scripts": {
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist && rimraf native",
     "build": "npm run build-es6 && npm run build-native",
     "build-es6": "webpack",
