@@ -4,6 +4,7 @@
   "description": "Javascript Library for Spatial Connect",
   "main": "dist/spatialconnect.js",
   "scripts": {
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist && rimraf native",
     "build": "npm run build-es6 && npm run build-native",
     "build-es6": "webpack",
