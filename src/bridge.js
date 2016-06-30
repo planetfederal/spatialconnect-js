@@ -16,7 +16,8 @@
 import {
   DeviceEventEmitter,
   NativeAppEventEmitter,
-  NativeModules
+  NativeModules,
+  Platform
 } from 'react-native';
 
 export function initialize() {
@@ -61,10 +62,11 @@ export function initialize() {
 
   function registerHandler(handlerName, handler) {
     if (navigator.product.match(/ReactNative/)) {
-      // for ios devices
-      NativeAppEventEmitter.addListener(handlerName, handler);
-      // for android devices
-      DeviceEventEmitter.addListener(handlerName, handler);
+      if (Platform.OS === 'ios') {
+        NativeAppEventEmitter.addListener(handlerName, handler);
+      } else if (Platform.OS === 'android') {
+        DeviceEventEmitter.addListener(handlerName, handler);
+      }
     } else {
       messageHandlers[handlerName] = handler;
     }
