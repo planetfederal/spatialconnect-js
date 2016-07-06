@@ -1,6 +1,6 @@
 {
   "name": "spatialconnect",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Javascript Library for Spatial Connect",
   "main": "dist/spatialconnect.js",
   "scripts": {
