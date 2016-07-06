@@ -9,19 +9,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 'use strict';
 
 let _filter = Object.create(null);
+let returnObject = {};
 
 /**
  * Creates a BBOX Filter to require the query to contain
  * features inside the BBOX
  * @param {Array} bbox [ll_lon,ll_lat,ur_lon,ur_lat]
  */
-const geoBBOXContains = (bbox) => {
+returnObject.geoBBOXContains = (bbox) => {
   _filter.$geocontains = bbox;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -29,9 +30,9 @@ const geoBBOXContains = (bbox) => {
  * contain features inside the BBOX
  * @param {Array} bbox [ll_lon,ll_lat,ur_lon,ur_lat]
  */
-const geoBBOXDisjoint = (bbox) => {
+returnObject.geoBBOXDisjoint = (bbox) => {
   _filter.$geodisjoint = bbox;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -39,9 +40,9 @@ const geoBBOXDisjoint = (bbox) => {
  *
  * @param {string/number} val
  */
-const greaterThan = (val) => {
+returnObject.greaterThan = (val) => {
   _filter.$gt = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -50,9 +51,9 @@ const greaterThan = (val) => {
  *
  * @param {string/number} val
  */
-const greaterThanOrEqual = (val) => {
+returnObject.greaterThanOrEqual = (val) => {
   _filter.$gte = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -60,9 +61,9 @@ const greaterThanOrEqual = (val) => {
  *
  * @param {string/number} val
  */
-const lessThan = (val) => {
+returnObject.lessThan = (val) => {
   _filter.$lt = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -71,9 +72,9 @@ const lessThan = (val) => {
  *
  * @param {string/number} val
  */
-const lessThanOrEqual = (val) => {
+returnObject.lessThanOrEqual = (val) => {
   _filter.$lte = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -81,9 +82,9 @@ const lessThanOrEqual = (val) => {
  *
  * @param {string/number} val
  */
-const equal = (val) => {
+returnObject.equal = (val) => {
   _filter.$e = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -92,9 +93,9 @@ const equal = (val) => {
  *
  * @param {string/number} val
  */
-const notEqual = (val) => {
+returnObject.notEqual = (val) => {
   _filter.$ne = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -104,12 +105,12 @@ const notEqual = (val) => {
  * @param {string/value} upper
  * @param {string/value} lower
  */
-const between = (upper, lower) => {
+returnObject.between = (upper, lower) => {
   _filter.$between = {
     upper: upper,
     lower: lower
   };
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -119,12 +120,12 @@ const between = (upper, lower) => {
  * @param {string/value} upper
  * @param {string/value} lower
  */
-const notBetween = (upper, lower) => {
+returnObject.notBetween = (upper, lower) => {
   _filter.$notbetween = {
     upper: upper,
     lower: lower
   };
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -133,9 +134,9 @@ const notBetween = (upper, lower) => {
  *
  * @param {array} val
  */
-const isIn = (val) => {
+returnObject.isIn = (val) => {
   _filter.$in = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -144,9 +145,9 @@ const isIn = (val) => {
  *
  * @param {array} val
  */
-const notIn = (val) => {
+returnObject.notIn = (val) => {
   _filter.$notin = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -155,9 +156,9 @@ const notIn = (val) => {
  *
  * @param {string} val
  */
-const like = (val) => {
+returnObject.like = (val) => {
   _filter.$like = val;
-  return _filter;
+  return returnObject;
 };
 
 /**
@@ -166,24 +167,23 @@ const like = (val) => {
  *
  * @param {string} val
  */
-const notLike = (val) => {
+returnObject.notLike = (val) => {
   _filter.$notlike = val;
+  return returnObject;
+};
+
+returnObject.limit = (maxPerLayer) => {
+  _filter.limit = maxPerLayer;
+  return returnObject;
+};
+
+returnObject.layerIds = (layerIdsArr) => {
+  _filter.layerIds = layerIdsArr;
+  return returnObject;
+};
+
+returnObject.value = () => {
   return _filter;
 };
 
-export {
-  geoBBOXContains,
-  geoBBOXDisjoint,
-  greaterThan,
-  greaterThanOrEqual,
-  lessThan,
-  lessThanOrEqual,
-  equal,
-  notEqual,
-  between,
-  notBetween,
-  isIn,
-  notIn,
-  like,
-  notLike
-};
+export default returnObject;
