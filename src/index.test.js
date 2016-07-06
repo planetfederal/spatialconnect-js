@@ -3,7 +3,7 @@
 /*globals it:false*/
 
 import { expect } from 'chai';
-import filter from './filter';
+import { filter } from './filter';
 import { spatialFeature } from './sc.spatialfeature';
 import { geometry } from './sc.geometry';
 import { initialize } from './bridge';

@@ -186,4 +186,4 @@ returnObject.value = () => {
   return _filter;
 };
 
-export default returnObject;
+export { returnObject as filter };
