@@ -82,11 +82,11 @@ export function initialize() {
   function _doSend(message, responseCallback) {
     if (responseCallback) {
       var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
-      responseCallbacks[callbackId] = responseCallback;
-      message['callbackId'] = callbackId;
+      responseCallbacks.callbackId = responseCallback;
+      message.callbackId = callbackId;
     }
     if (navigator.product.match(/ReactNative/)) {
-      NativeModules.SCBridge.handler(message);
+      NativeModules.SCBridge.handler(message,responseCallback);
     } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
