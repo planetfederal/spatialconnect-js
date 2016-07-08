@@ -38,21 +38,22 @@ connectWebViewJavascriptBridge(function (bridge) {
 
 });
 
+let send$ = Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send);
 
 export const authenticate = (user,pass) => window.WebViewJavascriptBridge.send({
   action: Commands.AUTHSERVICE_AUTHENTICATE,
   payload : {email:user,password:pass}
 });
 
-export const xAccessToken$ = () => Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+export const xAccessToken$ = () => send$({
   action : Commands.AUTHSERVICE_ACCESS_TOKEN
-}));
+});
 
 export const logout = () => window.WebViewJavascriptBridge.send({
   action : Commands.AUTHSERVICE_LOGOUT
 });
 
-export const startAllServices = () => window.WebViewJavascriptBridge.send({
+export const startAllServices = () => send$({
   action: Commands.START_ALL_SERVICES
 });
 
@@ -67,15 +68,15 @@ export const disableGPS = () => window.WebViewJavascriptBridge.send({
 });
 
 export const stores$ = () => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: Commands.DATASERVICE_ACTIVESTORESLIST
-  }));
+  });
 };
 
 export const forms$ = () => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: Commands.DATASERVICE_FORMSLIST
-  }));
+  });
 };
 
 export const store$ = (storeId) => {
@@ -85,47 +86,47 @@ export const store$ = (storeId) => {
 };
 
 export const createFeature$ = (featureObj) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: Commands.DATASERVICE_CREATEFEATURE,
     payload: {
       feature: featureObj
     }
-  }));
+  });
 };
 
 export const updateFeature$ = (featureObj) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: Commands.DATASERVICE_UPDATEFEATURE,
     payload: {
       feature: featureObj
     }
-  }));
+  });
 };
 
 export const deleteFeature$ = (featureId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: Commands.DATASERVICE_DELETEFEATURE,
     payload: featureId
-  }));
+  });
 };
 
 export const spatialQuery$ = (filter, storeId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY,
     payload: {
       filter: filter,
       storeId: storeId
-    }}));
+    }});
 };
 
 export const geospatialQuery$ = (filter, storeId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  return send$({
     action: storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY,
     payload: {
       filter: filter,
       storeId: storeId
     }
-  }));
+  });
 };
 
 // generic way to send a message to the SpatialConnect bridge
