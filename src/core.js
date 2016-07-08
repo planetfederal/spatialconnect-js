@@ -9,7 +9,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 'use strict';
 /*global WebViewJavascriptBridge*/
 import Rx from 'rx';
@@ -28,12 +28,6 @@ let connectWebViewJavascriptBridge = function (callback) {
   }
 };
 
-let lastKnownLocationSubject = new Rx.Subject();
-let querySubject = new Rx.Subject();
-let storeSubject = new Rx.Subject();
-let createFeatureSubject = new Rx.Subject();
-let formSubject = new Rx.Subject();
-
 connectWebViewJavascriptBridge(function (bridge) {
   bridge.init(function (message, responseCallback) {
     let data = {
@@ -41,116 +35,101 @@ connectWebViewJavascriptBridge(function (bridge) {
     };
     responseCallback(data);
   });
-  bridge.registerHandler('lastKnownLocation', (data) => lastKnownLocationSubject.onNext(data));
-  bridge.registerHandler('spatialQuery', (data) => querySubject.onNext(data));
-  bridge.registerHandler('storesList', (data) => storeSubject.onNext(data));
-  bridge.registerHandler('createFeature', (data) => createFeatureSubject.onNext(data));
-  bridge.registerHandler('formsList', (data) => formSubject.onNext(data));
+
 });
 
-const startAllServices = () => window.WebViewJavascriptBridge.send({
+
+export const authenticate = (user,pass) => window.WebViewJavascriptBridge.send({
+  action: Commands.AUTHSERVICE_AUTHENTICATE,
+  payload : {email:user,password:pass}
+});
+
+export const xAccessToken$ = () => Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+  action : Commands.AUTHSERVICE_ACCESS_TOKEN
+}));
+
+export const logout = () => window.WebViewJavascriptBridge.send({
+  action : Commands.AUTHSERVICE_LOGOUT
+});
+
+export const startAllServices = () => window.WebViewJavascriptBridge.send({
   action: Commands.START_ALL_SERVICES
 });
 
-const enableGPS = () => window.WebViewJavascriptBridge.send({
+export const enableGPS = () => window.WebViewJavascriptBridge.send({
   action: Commands.SENSORSERVICE_GPS,
   payload: 1
 });
 
-const disableGPS = () => window.WebViewJavascriptBridge.send({
+export const disableGPS = () => window.WebViewJavascriptBridge.send({
   action: Commands.SENSORSERVICE_GPS,
   payload: 0
 });
 
-const lastKnownLocation = () => {
-  enableGPS();
-  return lastKnownLocationSubject;
-};
-
-const stores = () => {
-  window.WebViewJavascriptBridge.send({
+export const stores$ = () => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
     action: Commands.DATASERVICE_ACTIVESTORESLIST
-  });
-  return storeSubject;
+  }));
 };
 
-const forms = () => {
-  window.WebViewJavascriptBridge.send({
+export const forms$ = () => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
     action: Commands.DATASERVICE_FORMSLIST
-  });
-  return formSubject;
+  }));
 };
 
-const store = (storeId) => {
-  return stores()
-    .flatMap(data => Rx.Observable.from(data.stores))
+export const store$ = (storeId) => {
+  return stores$()
     .filter(store => store.storeId === storeId)
     .first();
 };
 
-const createFeature = (featureObj) => {
-  window.WebViewJavascriptBridge.send({
+export const createFeature$ = (featureObj) => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
     action: Commands.DATASERVICE_CREATEFEATURE,
     payload: {
       feature: featureObj
     }
-  });
-  return createFeatureSubject;
+  }));
 };
 
-const updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
-  action: Commands.DATASERVICE_UPDATEFEATURE,
-  payload: {
-    feature: featureObj
-  }
-});
+export const updateFeature$ = (featureObj) => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+    action: Commands.DATASERVICE_UPDATEFEATURE,
+    payload: {
+      feature: featureObj
+    }
+  }));
+};
 
-const deleteFeature = (featureId) => window.WebViewJavascriptBridge.send({
-  action: Commands.DATASERVICE_DELETEFEATURE,
-  payload: featureId
-});
+export const deleteFeature$ = (featureId) => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
+    action: Commands.DATASERVICE_DELETEFEATURE,
+    payload: featureId
+  }));
+};
 
-const spatialQuery = (filter, storeId) => {
-  window.WebViewJavascriptBridge.send({
+export const spatialQuery$ = (filter, storeId) => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
     action: storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY,
     payload: {
       filter: filter,
       storeId: storeId
-    }
-  });
-  return querySubject;
+    }}));
 };
 
-const geospatialQuery = (filter, storeId) => {
-  console.log('geospatial query with filter ', filter);
-  window.WebViewJavascriptBridge.send({
+export const geospatialQuery$ = (filter, storeId) => {
+  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
     action: storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY,
     payload: {
       filter: filter,
       storeId: storeId
     }
-  });
-  return querySubject;
+  }));
 };
 
 // generic way to send a message to the SpatialConnect bridge
-const sendMessage = (actionId, payload) => window.WebViewJavascriptBridge.send({
+export const sendMessage = (actionId, payload) => window.WebViewJavascriptBridge.send({
   action: actionId,
   payload: payload
 });
-
-export {
-  startAllServices,
-  enableGPS,
-  disableGPS,
-  lastKnownLocation,
-  stores,
-  forms,
-  store,
-  createFeature,
-  updateFeature,
-  deleteFeature,
-  spatialQuery,
-  geospatialQuery,
-  sendMessage
-};

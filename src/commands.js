@@ -9,7 +9,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 'use strict';
 
 export default {
@@ -24,5 +24,8 @@ export default {
   DATASERVICE_UPDATEFEATURE: 115,
   DATASERVICE_DELETEFEATURE: 116,
   DATASERVICE_FORMSLIST: 117,
-  SENSORSERVICE_GPS: 200
+  SENSORSERVICE_GPS: 200,
+  AUTHSERVICE_AUTHENTICATE: 300,
+  AUTHSERVICE_LOGOUT: 301,
+  AUTHSERVICE_ACCESS_TOKEN: 302
 };
