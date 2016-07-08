@@ -13,8 +13,13 @@
 'use strict';
 /*global WebViewJavascriptBridge*/
 import Rx from 'rx';
-import Commands from './commands';
+import { Commands } from './commands';
 import { initialize } from './bridge.js';
+import {
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
+  Platform
+} from 'react-native';
 
 initialize(); //initalize bridge
 
@@ -35,101 +40,142 @@ connectWebViewJavascriptBridge(function (bridge) {
     };
     responseCallback(data);
   });
-
 });
 
+let uniqueId = 1;
+const uniqueType = type => {
+  return type.toString() + '_' + (uniqueId++) + '_' + new Date().getTime();
+};
+
+const fromEvent$ = responseId => Rx.Observable.fromEventPattern(
+  function addHandler (h) {
+    return Platform.OS === 'ios' ?
+      NativeAppEventEmitter.addListener(responseId, h) :
+      DeviceEventEmitter.addListener(responseId, h);
+  },
+  function delHandler (_, signal) { signal.remove(); }
+);
 
 export const authenticate = (user,pass) => window.WebViewJavascriptBridge.send({
-  action: Commands.AUTHSERVICE_AUTHENTICATE,
+  type: Commands.AUTHSERVICE_AUTHENTICATE,
   payload : {email:user,password:pass}
 });
 
-export const xAccessToken$ = () => Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-  action : Commands.AUTHSERVICE_ACCESS_TOKEN
-}));
-
 export const logout = () => window.WebViewJavascriptBridge.send({
-  action : Commands.AUTHSERVICE_LOGOUT
+  type : Commands.AUTHSERVICE_LOGOUT
 });
+
+export const xAccessToken$ = () => {
+  window.WebViewJavascriptBridge.send({
+    type: Commands.AUTHSERVICE_ACCESS_TOKEN
+  });
+  return fromEvent$(Commands.AUTHSERVICE_ACCESS_TOKEN.toString());
+};
+
+export const loginStatus$ = () => {
+  window.WebViewJavascriptBridge.send({
+    type: Commands.AUTHSERVICE_LOGIN_STATUS
+  });
+  return fromEvent$(Commands.AUTHSERVICE_LOGIN_STATUS.toString());
+};
 
 export const startAllServices = () => window.WebViewJavascriptBridge.send({
-  action: Commands.START_ALL_SERVICES
+  type: Commands.START_ALL_SERVICES
 });
 
-export const enableGPS = () => window.WebViewJavascriptBridge.send({
-  action: Commands.SENSORSERVICE_GPS,
-  payload: 1
-});
+export const enableGPS = () => {
+  window.WebViewJavascriptBridge.send({
+    type: Commands.SENSORSERVICE_GPS,
+    payload: 1
+  });
+  return fromEvent$(Commands.SENSORSERVICE_GPS.toString());
+};
 
 export const disableGPS = () => window.WebViewJavascriptBridge.send({
-  action: Commands.SENSORSERVICE_GPS,
+  type: Commands.SENSORSERVICE_GPS,
   payload: 0
 });
 
 export const stores$ = () => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_ACTIVESTORESLIST
-  }));
+  let responseId = uniqueType(Commands.DATASERVICE_ACTIVESTORESLIST);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_ACTIVESTORESLIST,
+    responseId: responseId
+  });
+  return fromEvent$(responseId);
 };
 
 export const forms$ = () => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_FORMSLIST
-  }));
+  let responseId = uniqueType(Commands.DATASERVICE_FORMSLIST);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_FORMSLIST,
+    responseId: responseId
+  });
+  return fromEvent$(responseId);
 };
 
 export const store$ = (storeId) => {
   return stores$()
+    .flatMap(data => Rx.Observable.from(data.payload.stores))
     .filter(store => store.storeId === storeId)
-    .first();
+    .first()
+    .map(store => ({ type: Commands.DATASERVICE_ACTIVESTOREBYID, payload: store }));
 };
 
 export const createFeature$ = (featureObj) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_CREATEFEATURE,
+  let responseId = uniqueType(Commands.DATASERVICE_CREATEFEATURE);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_CREATEFEATURE,
+    responseId: responseId,
     payload: {
       feature: featureObj
     }
-  }));
+  });
+  return fromEvent$(responseId);
 };
 
-export const updateFeature$ = (featureObj) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_UPDATEFEATURE,
-    payload: {
-      feature: featureObj
-    }
-  }));
-};
+export const updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
+  type: Commands.DATASERVICE_UPDATEFEATURE,
+  payload: {
+    feature: featureObj
+  }
+});
 
-export const deleteFeature$ = (featureId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: Commands.DATASERVICE_DELETEFEATURE,
-    payload: featureId
-  }));
-};
+export const deleteFeature = (featureId) => window.WebViewJavascriptBridge.send({
+  type: Commands.DATASERVICE_DELETEFEATURE,
+  payload: featureId
+});
 
 export const spatialQuery$ = (filter, storeId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY,
+  let c = storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
+  let responseId = uniqueType(c);
+  window.WebViewJavascriptBridge.send({
+    type: c,
+    responseId: responseId,
     payload: {
       filter: filter,
       storeId: storeId
-    }}));
+    }
+  });
+  return fromEvent$(responseId);
 };
 
 export const geospatialQuery$ = (filter, storeId) => {
-  return Rx.Observable.fromCallback(window.WebViewJavascriptBridge.send({
-    action: storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY,
+  let c = storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY;
+  let responseId = uniqueType(c);
+  window.WebViewJavascriptBridge.send({
+    type: c,
+    responseId: responseId,
     payload: {
       filter: filter,
       storeId: storeId
     }
-  }));
+  });
+  return fromEvent$(responseId);
 };
 
 // generic way to send a message to the SpatialConnect bridge
-export const sendMessage = (actionId, payload) => window.WebViewJavascriptBridge.send({
-  action: actionId,
+export const sendMessage = (typeId, payload) => window.WebViewJavascriptBridge.send({
+  type: typeId,
   payload: payload
 });
