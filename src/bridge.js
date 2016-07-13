@@ -63,9 +63,9 @@ export function initialize() {
   function registerHandler(handlerName, handler) {
     if (navigator.product.match(/ReactNative/)) {
       if (Platform.OS === 'ios') {
-        NativeAppEventEmitter.addListener(handlerName, handler);
+        NativeAppEventEmitter.addListener(handlerName.toString(), handler);
       } else if (Platform.OS === 'android') {
-        DeviceEventEmitter.addListener(handlerName, handler);
+        DeviceEventEmitter.addListener(handlerName.toString(), handler);
       }
     } else {
       messageHandlers[handlerName] = handler;
@@ -82,11 +82,11 @@ export function initialize() {
   function _doSend(message, responseCallback) {
     if (responseCallback) {
       var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
-      responseCallbacks.callbackId = responseCallback;
+      responseCallbacks[callbackId] = responseCallback;
       message.callbackId = callbackId;
     }
     if (navigator.product.match(/ReactNative/)) {
-      NativeModules.SCBridge.handler(message,responseCallback);
+      NativeModules.SCBridge.handler(message.data);
     } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
