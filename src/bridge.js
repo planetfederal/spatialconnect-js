@@ -16,7 +16,8 @@
 import {
   DeviceEventEmitter,
   NativeAppEventEmitter,
-  NativeModules
+  NativeModules,
+  Platform
 } from 'react-native';
 
 export function initialize() {
@@ -61,10 +62,11 @@ export function initialize() {
 
   function registerHandler(handlerName, handler) {
     if (navigator.product.match(/ReactNative/)) {
-      // for ios devices
-      NativeAppEventEmitter.addListener(handlerName, handler);
-      // for android devices
-      DeviceEventEmitter.addListener(handlerName, handler);
+      if (Platform.OS === 'ios') {
+        NativeAppEventEmitter.addListener(handlerName.toString(), handler);
+      } else if (Platform.OS === 'android') {
+        DeviceEventEmitter.addListener(handlerName.toString(), handler);
+      }
     } else {
       messageHandlers[handlerName] = handler;
     }
@@ -81,10 +83,10 @@ export function initialize() {
     if (responseCallback) {
       var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
       responseCallbacks[callbackId] = responseCallback;
-      message['callbackId'] = callbackId;
+      message.callbackId = callbackId;
     }
     if (navigator.product.match(/ReactNative/)) {
-      NativeModules.SCBridge.handler(message);
+      NativeModules.SCBridge.handler(message.data);
     } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
