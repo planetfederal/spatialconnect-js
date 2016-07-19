@@ -9,10 +9,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 'use strict';
 
 let _filter = Object.create(null);
+
+/**
+ * Sets the max number of features returned
+ * @param {number} maxCount
+ */
+const limit = (maxCount) => {
+  _filter.limit = maxCount;
+  return _filter;
+};
+
+/**
+ * Sets the list of layerIds for the query to limit by
+ * @param {Array} layerIds
+ */
+const layerIds = (layerIds) => {
+  _filter.layerIds = layerIds;
+  return _filter;
+};
 
 /**
  * Creates a BBOX Filter to require the query to contain
@@ -172,6 +190,8 @@ const notLike = (val) => {
 };
 
 export {
+  limit,
+  layerIds,
   geoBBOXContains,
   geoBBOXDisjoint,
   greaterThan,

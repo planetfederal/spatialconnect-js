@@ -120,6 +120,21 @@ describe('filter', function() {
       expect(f.$notlike).to.be.a('string');
     });
   });
+
+  describe('limit',() => {
+    var f = filter.limit(100);
+    it('should be 100', () => {
+      expect(f.limit).to.be.a('number');
+      expect(f.limit).to.equal(100);
+    });
+  });
+
+  describe('layerIds',() => {
+    var f = filter.layerIds(['foo','bar']);
+    it('should be an array', () => {
+      expect(f.layerIds).to.be.a('array');
+    });
+  });
 });
 
 describe('sc.spatialfeature', function() {
