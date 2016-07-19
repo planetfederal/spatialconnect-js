@@ -32,6 +32,6 @@ export const Commands = {
 };
 
 export const AuthStatus = {
-  SCAUTH_AUTHENTICATED: 0,
-  SCAUTH_NOT_AUTHENTICATED: 1
+  SCAUTH_AUTHENTICATED: 1,
+  SCAUTH_NOT_AUTHENTICATED: 0
 };
