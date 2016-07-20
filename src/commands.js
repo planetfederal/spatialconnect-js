@@ -9,10 +9,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
+
 'use strict';
 
-export default {
+export const Commands = {
   START_ALL_SERVICES: 1,
   DATASERVICE_ACTIVESTORESLIST: 100,
   DATASERVICE_ACTIVESTOREBYID: 101,
@@ -24,5 +24,14 @@ export default {
   DATASERVICE_UPDATEFEATURE: 115,
   DATASERVICE_DELETEFEATURE: 116,
   DATASERVICE_FORMSLIST: 117,
-  SENSORSERVICE_GPS: 200
+  SENSORSERVICE_GPS: 200,
+  AUTHSERVICE_AUTHENTICATE: 300,
+  AUTHSERVICE_LOGOUT: 301,
+  AUTHSERVICE_ACCESS_TOKEN: 302,
+  AUTHSERVICE_LOGIN_STATUS: 303
+};
+
+export const AuthStatus = {
+  SCAUTH_AUTHENTICATED: 0,
+  SCAUTH_NOT_AUTHENTICATED: 1
 };
