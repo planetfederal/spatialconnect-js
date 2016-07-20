@@ -153,7 +153,7 @@ export const spatialQuery$ = (filter, storeId) => {
     type: c,
     responseId: responseId,
     payload: {
-      filter: filter,
+      filter: filter.value(),
       storeId: storeId
     }
   });
@@ -167,7 +167,7 @@ export const geospatialQuery$ = (filter, storeId) => {
     type: c,
     responseId: responseId,
     payload: {
-      filter: filter,
+      filter: filter.value(),
       storeId: storeId
     }
   });
