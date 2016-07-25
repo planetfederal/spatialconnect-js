@@ -174,6 +174,29 @@ export const geospatialQuery$ = (filter, storeId) => {
   return fromEvent$(responseId);
 };
 
+export const getRequest = (url) => {
+  let responseId = uniqueType(Commands.NETWORKSERVICE_GET_REQUEST);
+  window.WebViewJavascriptBridge.send({
+    type : Commands.NETWORKSERVICE_GET_REQUEST,
+    responseId : responseId,
+    payload : {
+      url : url
+    }
+  });
+};
+
+export const postRequest = (url,body) => {
+  let responseId = uniqueType(Commands.NETWORKSERVICE_POST_REQUEST);
+  window.WebViewJavascriptBridge.send({
+    type : Commands.NETWORKSERVICE_POST_REQUEST,
+    responseId : responseId,
+    payload : {
+      url : url,
+      body : body
+    }
+  });
+};
+
 // generic way to send a message to the SpatialConnect bridge
 export const sendMessage = (typeId, payload) => window.WebViewJavascriptBridge.send({
   type: typeId,
