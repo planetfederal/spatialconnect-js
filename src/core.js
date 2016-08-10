@@ -106,9 +106,9 @@ export const stores$ = () => {
 };
 
 export const forms$ = () => {
-  let responseId = uniqueType(Commands.DATASERVICE_FORMSLIST);
+  let responseId = uniqueType(Commands.DATASERVICE_FORMLIST);
   window.WebViewJavascriptBridge.send({
-    type: Commands.DATASERVICE_FORMSLIST,
+    type: Commands.DATASERVICE_FORMLIST,
     responseId: responseId
   });
   return fromEvent$(responseId);
