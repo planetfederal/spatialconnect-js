@@ -79,6 +79,13 @@ export const loginStatus$ = () => {
   return fromEvent$(Commands.AUTHSERVICE_LOGIN_STATUS.toString());
 };
 
+export const notifications$ = () => {
+  window.WebViewJavascriptBridge.send({
+    type: Commands.NOTIFICATIONS
+  });
+  return fromEvent$(Commands.NOTIFICATIONS.toString());
+};
+
 export const startAllServices = () => window.WebViewJavascriptBridge.send({
   type: Commands.START_ALL_SERVICES
 });
