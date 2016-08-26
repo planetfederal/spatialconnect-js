@@ -13,7 +13,6 @@
 'use strict';
 /*global WebViewJavascriptBridge*/
 import Rx from 'rx';
-import { isArray } from 'lodash';
 import { Commands } from './commands';
 import { initialize } from './bridge.js';
 import {
