@@ -155,13 +155,11 @@ export const deleteFeature = (featureId) => window.WebViewJavascriptBridge.send(
 });
 
 export const spatialQuery$ = (filter, storeId) => {
-  let c;
-  if (storeId === undefined) {
-    c = Commands.DATASERVICE_SPATIALQUERYALL;
-  } else if (isArray(storeId)) {
-    c = Commands.DATASERVICE_SPATIALQUERYBYIDS;
-  } else {
-    c = Commands.DATASERVICE_SPATIALQUERY;
+  let c = storeId === undefined ? Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
+  if (storeId) {
+    if (typeof storeId === 'string') {
+      storeId = [storeId];
+    }
   }
   let responseId = uniqueType(c);
   window.WebViewJavascriptBridge.send({
@@ -176,13 +174,11 @@ export const spatialQuery$ = (filter, storeId) => {
 };
 
 export const geospatialQuery$ = (filter, storeId) => {
-  let c;
-  if (storeId === undefined) {
-    c = Commands.DATASERVICE_GEOSPATIALQUERYALL;
-  } else if (isArray(storeId)) {
-    c = Commands.DATASERVICE_GEOSPATIALQUERYBYIDS;
-  } else {
-    c = Commands.DATASERVICE_GEOSPATIALQUERY;
+  let c = storeId === undefined ? Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY;
+  if (storeId) {
+    if (typeof storeId === 'string') {
+      storeId = [storeId];
+    }
   }
   let responseId = uniqueType(c);
   window.WebViewJavascriptBridge.send({
