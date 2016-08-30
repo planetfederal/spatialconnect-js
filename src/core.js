@@ -21,6 +21,8 @@ import {
   Platform
 } from 'react-native';
 
+const COMPLETED = '_completed';
+
 initialize(); //initalize bridge
 
 let connectWebViewJavascriptBridge = function (callback) {
@@ -50,8 +52,8 @@ const uniqueType = type => {
 const fromEvent$ = responseId => Rx.Observable.fromEventPattern(
   function addHandler (h) {
     return Platform.OS === 'ios' ?
-      NativeAppEventEmitter.addListener(responseId, h) :
-      DeviceEventEmitter.addListener(responseId, h);
+      NativeAppEventEmitter.addListener(responseId.toString(), h) :
+      DeviceEventEmitter.addListener(responseId.toString(), h);
   },
   function delHandler (_, signal) { signal.remove(); }
 );
@@ -69,21 +71,21 @@ export const xAccessToken$ = () => {
   window.WebViewJavascriptBridge.send({
     type: Commands.AUTHSERVICE_ACCESS_TOKEN
   });
-  return fromEvent$(Commands.AUTHSERVICE_ACCESS_TOKEN.toString());
+  return fromEvent$(Commands.AUTHSERVICE_ACCESS_TOKEN);
 };
 
 export const loginStatus$ = () => {
   window.WebViewJavascriptBridge.send({
     type: Commands.AUTHSERVICE_LOGIN_STATUS
   });
-  return fromEvent$(Commands.AUTHSERVICE_LOGIN_STATUS.toString());
+  return fromEvent$(Commands.AUTHSERVICE_LOGIN_STATUS);
 };
 
 export const notifications$ = () => {
   window.WebViewJavascriptBridge.send({
     type: Commands.NOTIFICATIONS
   });
-  return fromEvent$(Commands.NOTIFICATIONS.toString());
+  return fromEvent$(Commands.NOTIFICATIONS);
 };
 
 export const startAllServices = () => window.WebViewJavascriptBridge.send({
@@ -95,7 +97,7 @@ export const enableGPS = () => {
     type: Commands.SENSORSERVICE_GPS,
     payload: 1
   });
-  return fromEvent$(Commands.SENSORSERVICE_GPS.toString());
+  return fromEvent$(Commands.SENSORSERVICE_GPS);
 };
 
 export const disableGPS = () => window.WebViewJavascriptBridge.send({
@@ -169,7 +171,7 @@ export const spatialQuery$ = (filter, storeId) => {
       storeId: storeId
     }
   });
-  return fromEvent$(responseId);
+  return fromEvent$(responseId).takeUntil(fromEvent$(responseId + COMPLETED));
 };
 
 export const geospatialQuery$ = (filter, storeId) => {
@@ -188,7 +190,7 @@ export const geospatialQuery$ = (filter, storeId) => {
       storeId: storeId
     }
   });
-  return fromEvent$(responseId);
+  return fromEvent$(responseId).takeUntil(fromEvent$(responseId + COMPLETED));
 };
 
 export const getRequest = (url) => {
