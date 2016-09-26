@@ -18,6 +18,7 @@ import { initialize } from './bridge.js';
 import {
   DeviceEventEmitter,
   NativeAppEventEmitter,
+  NativeModules,
   Platform
 } from 'react-native';
 
@@ -214,6 +215,10 @@ export const postRequest = (url,body) => {
       body : body
     }
   });
+};
+
+export const bindMapView = (node) => {
+  NativeModules.SCBridge.bindMapView(node);
 };
 
 // generic way to send a message to the SpatialConnect bridge
