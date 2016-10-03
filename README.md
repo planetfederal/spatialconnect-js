@@ -1,6 +1,6 @@
 # SpatialConnect Javascript Library for Android & iOS
 [![Build Status](https://travis-ci.org/boundlessgeo/spatialconnect-js.svg?branch=develop)](https://travis-ci.org/boundlessgeo/spatialconnect-js)
-Version 0.5.0
+Version 0.6.0
 
 ## Philosophy
 The SpatialConnect javascript bridge is a cross platform solution for letting webviews access native functionality. This has a number of benefits pertaining to performance, security, and persistence to name a few. The request/response pattern is similar to the one way data flow paradigm found in the Flux architecture. A request occurs by calling an action in the library, and then all subscribers to the response observable will receive the result. The subscribers can use RxJS Observable instance methods to filter and operate on events that are emitted. We use the term `spatial` to refer to data with a finite number of dimensions. We use the term `geospatial` to refer to data with a finite number of dimensions where one of those dimensions have geographic coordinates.
@@ -162,7 +162,7 @@ sc.disableGPS();//Disable GPS
 
 ### Custom Actions
 
-You can send arbitrary messages to the native bridge like so:   
+You can send arbitrary messages to the native bridge like so:
 ```javascript
 sc.action.sendMessage(998,payload);
 ```
