@@ -144,12 +144,17 @@ export const createFeature$ = (featureObj) => {
   return fromEvent$(responseId);
 };
 
-export const updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
-  type: Commands.DATASERVICE_UPDATEFEATURE,
-  payload: {
-    feature: featureObj
-  }
-});
+export const updateFeature$ = (featureObj) => {
+  let responseId = uniqueType(Commands.DATASERVICE_UPDATEFEATURE);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_UPDATEFEATURE,
+    responseId: responseId,
+    payload: {
+      feature: featureObj
+    }
+  });
+  return fromEvent$(responseId);
+};
 
 export const deleteFeature = (featureId) => window.WebViewJavascriptBridge.send({
   type: Commands.DATASERVICE_DELETEFEATURE,
