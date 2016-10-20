@@ -222,6 +222,15 @@ export const postRequest = (url,body) => {
   });
 };
 
+export const backendUri$ = () => {
+  let responseId = uniqueType(Commands.BACKENDSERVICE_HTTP_URI);
+  window.WebViewJavascriptBridge.send({
+    type : Commands.BACKENDSERVICE_HTTP_URI,
+    responseId : responseId
+  });
+  return fromEvent$(responseId);
+};
+
 export const bindMapView = (node) => {
   NativeModules.SCBridge.bindMapView(node);
 };
