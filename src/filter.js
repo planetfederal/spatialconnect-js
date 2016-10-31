@@ -12,7 +12,7 @@
 
 'use strict';
 
-let _filter = Object.create(null);
+let _filter = {};
 let returnObject = {};
 
 /**
@@ -173,7 +173,7 @@ returnObject.notLike = (val) => {
 };
 
 /**
- * 
+ *
  *
  * @param {number} maxPerLayer
  */

@@ -107,6 +107,15 @@ export const disableGPS = () => window.WebViewJavascriptBridge.send({
 });
 
 export const stores$ = () => {
+  let responseId = uniqueType(Commands.DATASERVICE_STORELIST);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_STORELIST,
+    responseId: responseId
+  });
+  return fromEvent$(responseId);
+};
+
+export const activeStores$ = () => {
   let responseId = uniqueType(Commands.DATASERVICE_ACTIVESTORESLIST);
   window.WebViewJavascriptBridge.send({
     type: Commands.DATASERVICE_ACTIVESTORESLIST,
