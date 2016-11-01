@@ -16,17 +16,18 @@ var isArray = function(a) {
 
 describe('filter', function() {
   describe('geoBBOXContains', function() {
-    var f = filter.geoBBOXContains(
+    var f = filter().geoBBOXContains(
       [-180, -90, 180, 90]
     ).value();
     it('to be an array', function() {
+      console.log(f);
       expect(f.$geocontains).to.be.a('array');
     });
   });
 
   describe('geoBBOXDisjoint', function() {
-    var f = filter.geoBBOXContains(
-      [-180, -90, 180, 90]
+    var f = filter().geoBBOXContains(
+      [-180, -90, 180, 9000]
     ).value();
     it('to be an array', function() {
       expect(f.$geocontains).to.satisfy(isArray);
@@ -34,63 +35,63 @@ describe('filter', function() {
   });
 
   describe('greaterThan', function() {
-    var f = filter.greaterThan('foo').value();
+    var f = filter().greaterThan('foo').value();
     it('to be a string', function() {
       expect(f.$gt).to.be.a('string');
     });
   });
 
   describe('greaterThanOrEqual', function() {
-    var f = filter.greaterThanOrEqual('foo').value();
+    var f = filter().greaterThanOrEqual('foo').value();
     it('to be a string', function() {
       expect(f.$gte).to.be.a('string');
     });
   });
 
   describe('lessThan', function() {
-    var f = filter.lessThan('foo').value();
+    var f = filter().lessThan('foo').value();
     it('to be a string', function() {
       expect(f.$lt).to.be.a('string');
     });
   });
 
   describe('lessThanOrEqual', function() {
-    var f = filter.lessThanOrEqual('foo').value();
+    var f = filter().lessThanOrEqual('foo').value();
     it('to be a string', function() {
       expect(f.$lte).to.be.a('string');
     });
   });
 
   describe('equal', function() {
-    var f = filter.equal('foo').value();
+    var f = filter().equal('foo').value();
     it('to be a string', function() {
       expect(f.$e).to.be.a('string');
     });
   });
 
   describe('notEqual', function() {
-    var f = filter.notEqual('foo').value();
+    var f = filter().notEqual('foo').value();
     it('to be a string', function() {
       expect(f.$ne).to.be.a('string');
     });
   });
 
   describe('between', function() {
-    var f = filter.between('foo', 'foo2').value();
+    var f = filter().between('foo', 'foo2').value();
     it('to be an object', function() {
       expect(f.$between).to.be.a('object');
     });
   });
 
   describe('notBetween', function() {
-    var f = filter.notBetween('foo', 'foo2').value();
+    var f = filter().notBetween('foo', 'foo2').value();
     it('to be an object', function() {
       expect(f.$notbetween).to.be.a('object');
     });
   });
 
   describe('in', function() {
-    var f = filter.isIn(
+    var f = filter().isIn(
       [-180, -90, 180, 90]
     ).value();
     it('to be an array', function() {
@@ -99,7 +100,7 @@ describe('filter', function() {
   });
 
   describe('notIn', function() {
-    var f = filter.notIn(
+    var f = filter().notIn(
       [-180, -90, 180, 90]
     ).value();
     it('to be an array', function() {
@@ -108,21 +109,21 @@ describe('filter', function() {
   });
 
   describe('like', function() {
-    var f = filter.like('foo').value();
+    var f = filter().like('foo').value();
     it('to be a string', function() {
       expect(f.$like).to.be.a('string');
     });
   });
 
   describe('notLike', function() {
-    var f = filter.notLike('foo').value();
+    var f = filter().notLike('foo').value();
     it('to be a string', function() {
       expect(f.$notlike).to.be.a('string');
     });
   });
 
   describe('limit',() => {
-    var f = filter.limit(250).value();
+    var f = filter().limit(250).value();
     it('should be 250', () => {
       expect(f.limit).to.be.a('number');
       expect(f.limit).to.equal(250);
@@ -130,20 +131,28 @@ describe('filter', function() {
   });
 
   describe('layerIds',() => {
-    var f = filter.layerIds(['foo','bar']).value();
+    var f = filter().layerIds(['foo','bar']).value();
     it('should be an array', () => {
       expect(f.layerIds).to.be.a('array');
     });
   });
 
   describe('limit and layers',() => {
-    var f = filter.layerIds(['foo','bar2']).limit(250).value();
+    var f = filter().layerIds(['foo','bar2']).limit(250).value();
     it('Should have multiple filters', () => {
       expect(f.layerIds).to.be.a('array');
       expect(f.limit).to.be.a('number');
       expect(f.limit).to.equal(250);
     });
   });
+
+  describe('filter creation',() => {
+    var f = filter().layerIds(['foo','bar']).value();
+    it('should have on property', () => {
+      expect(Object.keys(f)).to.have.length(1);
+    });
+  });
+
 });
 
 describe('sc.spatialfeature', function() {
