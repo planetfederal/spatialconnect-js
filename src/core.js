@@ -107,6 +107,15 @@ export const disableGPS = () => window.WebViewJavascriptBridge.send({
 });
 
 export const stores$ = () => {
+  let responseId = uniqueType(Commands.DATASERVICE_STORELIST);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_STORELIST,
+    responseId: responseId
+  });
+  return fromEvent$(responseId);
+};
+
+export const activeStores$ = () => {
   let responseId = uniqueType(Commands.DATASERVICE_ACTIVESTORESLIST);
   window.WebViewJavascriptBridge.send({
     type: Commands.DATASERVICE_ACTIVESTORESLIST,
@@ -144,12 +153,17 @@ export const createFeature$ = (featureObj) => {
   return fromEvent$(responseId);
 };
 
-export const updateFeature = (featureObj) => window.WebViewJavascriptBridge.send({
-  type: Commands.DATASERVICE_UPDATEFEATURE,
-  payload: {
-    feature: featureObj
-  }
-});
+export const updateFeature$ = (featureObj) => {
+  let responseId = uniqueType(Commands.DATASERVICE_UPDATEFEATURE);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.DATASERVICE_UPDATEFEATURE,
+    responseId: responseId,
+    payload: {
+      feature: featureObj
+    }
+  });
+  return fromEvent$(responseId);
+};
 
 export const deleteFeature = (featureId) => window.WebViewJavascriptBridge.send({
   type: Commands.DATASERVICE_DELETEFEATURE,
@@ -215,6 +229,15 @@ export const postRequest = (url,body) => {
       body : body
     }
   });
+};
+
+export const backendUri$ = () => {
+  let responseId = uniqueType(Commands.BACKENDSERVICE_HTTP_URI);
+  window.WebViewJavascriptBridge.send({
+    type : Commands.BACKENDSERVICE_HTTP_URI,
+    responseId : responseId
+  });
+  return fromEvent$(responseId);
 };
 
 export const bindMapView = (node) => {
