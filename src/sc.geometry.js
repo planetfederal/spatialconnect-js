@@ -9,24 +9,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
-'use strict';
 
-import { spatialFeature } from './sc.spatialfeature';
 import * as _ from 'lodash';
+import { spatialFeature } from './sc.spatialfeature';
 
 export function geometry(storeId, layerId, gj) {
-  var scGeometry = Object.create(spatialFeature(storeId, layerId, gj.properties));
+  let scGeometry = Object.create(spatialFeature(storeId, layerId, gj.properties));
 
-  var baseFeature = Object.getPrototypeOf(scGeometry).serialize();
+  const baseFeature = Object.getPrototypeOf(scGeometry).serialize();
   scGeometry = _.defaults(gj, baseFeature);
 
   if (scGeometry.geometry === undefined) {
     scGeometry.geometry = null;
   }
 
-  scGeometry.serialize = function() {
-    var obj = {};
+  scGeometry.serialize = function () {
+    const obj = {};
     obj.type = this.type;
     obj.storeId = this.storeId;
     obj.layerId = this.layerId;
