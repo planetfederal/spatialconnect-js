@@ -163,20 +163,22 @@ export const deleteFeature = featureId => window.WebViewJavascriptBridge.send({
 export const spatialQuery$ = (filter, storeId) => {
   const c = storeId === undefined ?
     Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
-  let storeIds = storeId;
-  if (storeIds) {
-    if (typeof storeIds === 'string') {
-      storeIds = [storeIds];
+  const payload = {
+    filter: filter.value(),
+  };
+  if (storeId) {
+    if (typeof storeId === 'string') {
+      payload.storeId = [storeId];
+    }
+    if (Array.isArray(storeId)) {
+      payload.storeId = storeId;
     }
   }
   const responseId = uniqueType(c);
   window.WebViewJavascriptBridge.send({
     type: c,
     responseId,
-    payload: {
-      filter: filter.value(),
-      storeIds,
-    },
+    payload,
   });
   return fromEvent$(responseId).takeUntil(fromEvent$(responseId + COMPLETED));
 };
@@ -184,20 +186,22 @@ export const spatialQuery$ = (filter, storeId) => {
 export const geospatialQuery$ = (filter, storeId) => {
   const c = storeId === undefined ?
     Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY;
-  let storeIds = storeId;
-  if (storeIds) {
-    if (typeof storeIds === 'string') {
-      storeIds = [storeIds];
+  const payload = {
+    filter: filter.value(),
+  };
+  if (storeId) {
+    if (typeof storeId === 'string') {
+      payload.storeId = [storeId];
+    }
+    if (Array.isArray(storeId)) {
+      payload.storeId = storeId;
     }
   }
   const responseId = uniqueType(c);
   window.WebViewJavascriptBridge.send({
     type: c,
     responseId,
-    payload: {
-      filter: filter.value(),
-      storeIds,
-    },
+    payload,
   });
   return fromEvent$(responseId).takeUntil(fromEvent$(responseId + COMPLETED));
 };

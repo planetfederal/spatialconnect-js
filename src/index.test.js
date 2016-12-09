@@ -150,8 +150,8 @@ describe('sc.spatialfeature', () => {
     expect(sf.layerId).to.be.a('string');
     expect(sf.properties).to.be.a('object');
     expect(sf.properties.foo).to.equal('bar');
-    // expect(sf.date).to.exist;
-    // expect(sf.createdAt).to.exist;
+    expect(sf.date.getTime()).to.be.a('number');
+    expect(sf.createdAt.getTime()).to.be.a('number');
     expect(sf.style).to.be.a('object');
   });
 });
@@ -174,8 +174,8 @@ describe('sc.geometry', () => {
     expect(g.storeId).to.be.a('string');
     expect(g.layerId).to.be.a('string');
     expect(g.properties).to.be.a('object');
-    // expect(g.date).to.exist;
-    // expect(g.createdAt).to.exist;
+    expect(g.date.getTime()).to.be.a('number');
+    expect(g.createdAt.getTime()).to.be.a('number');
     expect(g.style).to.be.a('object');
     expect(g.geometry).to.be.a('object');
   });
