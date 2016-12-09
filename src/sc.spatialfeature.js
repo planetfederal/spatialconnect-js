@@ -9,30 +9,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
- 
-'use strict';
 
 import * as _ from 'lodash';
 
 export function spatialFeature(storeId, layerId, featureProps) {
   if (layerId === undefined) {
-    throw 'layerId must be defined for all spatial features.';
+    throw new Error('layerId must be defined for all spatial features.');
   }
-  var spatialFeature = {};
-  var defaultObj = {
+
+  const defaultObj = {
     date: new Date(),
     createdAt: new Date(),
     properties: {},
-    storeId: storeId,
-    layerId: layerId,
+    storeId,
+    layerId,
     style: {},
-    type: 'Feature'
+    type: 'Feature',
   };
 
-  spatialFeature = _.defaults({ properties: featureProps }, defaultObj);
+  const sf = _.defaults({ properties: featureProps }, defaultObj);
 
-  spatialFeature.serialize = function() {
-    var obj = {};
+  sf.serialize = function () {
+    const obj = {};
     obj.type = this.type;
     obj.storeId = this.storeId;
     obj.layerId = this.layerId;
@@ -42,5 +40,5 @@ export function spatialFeature(storeId, layerId, featureProps) {
     obj.style = this.style;
     return obj;
   };
-  return spatialFeature;
+  return sf;
 }

@@ -1,8 +1,7 @@
-'use strict';
 
 export const filter = () => {
-  let _filter = {};
-  let returnObject = {};
+  const _filter = {};
+  const returnObject = {};
 
   /**
    * Creates a BBOX Filter to require the query to contain
@@ -95,10 +94,7 @@ export const filter = () => {
    * @param {string/value} lower
    */
   returnObject.between = (upper, lower) => {
-    _filter.$between = {
-      upper: upper,
-      lower: lower
-    };
+    _filter.$between = { upper, lower };
     return returnObject;
   };
 
@@ -110,10 +106,7 @@ export const filter = () => {
    * @param {string/value} lower
    */
   returnObject.notBetween = (upper, lower) => {
-    _filter.$notbetween = {
-      upper: upper,
-      lower: lower
-    };
+    _filter.$notbetween = { upper, lower };
     return returnObject;
   };
 
@@ -184,9 +177,8 @@ export const filter = () => {
   /**
    * Retrieves the value to send to the Mobile Bridge
    */
-  returnObject.value = () => {
-    return _filter;
-  };
+  returnObject.value = () => _filter;
+
 
   return returnObject;
 };

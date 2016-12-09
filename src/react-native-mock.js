@@ -14,5 +14,5 @@ export default {
   DeviceEventEmitter: {},
   NativeAppEventEmitter: {},
   NativeModules: {},
-  Platform: {}
+  Platform: {},
 };

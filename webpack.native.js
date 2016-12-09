@@ -1,33 +1,30 @@
-var path = require('path');
-
-
 module.exports = {
   entry: {
-    './native/index': './src/index.js'
+    './native/index': './src/index.js',
   },
   output: {
     library: 'spatialconnect',
     libraryTarget: 'umd',
-    filename: '[name].js'
+    filename: '[name].js',
   },
   externals: {
-    'react-native': 'react-native'
+    'react-native': 'react-native',
   },
   module: {
     loaders: [
       {
         test: /\.js?$/,
         exclude: /(node_modules)/,
-        loader: 'babel'
+        loader: 'babel',
       }, {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        loader: 'eslint-loader',
       }, {
         test: /\.json$/,
         exclude: /node_modules/,
-        loader: 'json'
-      }
-    ]
-  }
+        loader: 'json',
+      },
+    ],
+  },
 };

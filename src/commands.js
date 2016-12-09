@@ -10,15 +10,13 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
-
 import commands from './schema/actions.json';
 
 export const Commands = commands;
 
 export const AuthStatus = {
   SCAUTH_AUTHENTICATED: 1,
-  SCAUTH_NOT_AUTHENTICATED: 0
+  SCAUTH_NOT_AUTHENTICATED: 0,
 };
 
 export const StoreStatus = {
@@ -26,5 +24,5 @@ export const StoreStatus = {
   SC_DATASTORE_RUNNING: 1,
   SC_DATASTORE_PAUSED: 2,
   SC_DATASTORE_STOPPED: 3,
-  SC_DATASTORE_DOWNLOADINGDATA: 4
+  SC_DATASTORE_DOWNLOADINGDATA: 4,
 };

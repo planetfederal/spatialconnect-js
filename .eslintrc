@@ -1,0 +1,22 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "max-len": ["error", 100, { "ignoreComments": true }],
+    "no-underscore-dangle": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-use-before-define": ["error", { "functions": false }],
+    "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+    "import/prefer-default-export": "off",
+  },
+  "settings": {
+    "import/resolver": "webpack",
+    "import/external-module-folders": ["react-native"],
+  },
+  "globals": {
+    "window": false,
+    "document": false,
+    "navigator": false,
+    "WebViewJavascriptBridge": false,
+    "_WebViewJavascriptBridge": false
+  }
+}
