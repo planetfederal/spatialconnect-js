@@ -237,6 +237,10 @@ export const bindMapView = (node) => {
   NativeModules.SCBridge.bindMapView(node);
 };
 
+export const addRasterLayers = (storeIds) => {
+  NativeModules.SCBridge.addRasterLayers(storeIds);
+};
+
 // generic way to send a message to the SpatialConnect bridge
 export const sendMessage = (typeId, payload) => window.WebViewJavascriptBridge.send({
   type: typeId,
