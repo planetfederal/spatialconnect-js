@@ -233,6 +233,15 @@ export const backendUri$ = () => {
   return fromEvent$(responseId);
 };
 
+export const mqttConnected$ = () => {
+  const responseId = uniqueType(Commands.BACKENDSERVICE_MQTT_CONNECTED);
+  window.WebViewJavascriptBridge.send({
+    type: Commands.BACKENDSERVICE_MQTT_CONNECTED,
+    responseId,
+  });
+  return fromEvent$(responseId);
+};
+
 export const bindMapView = (node) => {
   NativeModules.SCBridge.bindMapView(node);
 };
