@@ -12,6 +12,14 @@
 
 import * as _ from 'lodash';
 
+/**
+ * Create a feature that is associated with a specific store and layer.
+ * @function
+ * @param {string} storeId
+ * @param {string} layerId
+ * @param {object} featureProps - The feature's properties
+ * @returns {object} the serialized feature
+ */
 export function spatialFeature(storeId, layerId, featureProps) {
   if (layerId === undefined) {
     throw new Error('layerId must be defined for all spatial features.');
@@ -40,5 +48,6 @@ export function spatialFeature(storeId, layerId, featureProps) {
     obj.style = this.style;
     return obj;
   };
-  return sf;
+
+  return sf.serialize();
 }

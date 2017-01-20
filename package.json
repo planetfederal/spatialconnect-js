@@ -10,7 +10,8 @@
     "build-es6": "webpack",
     "build-native": "webpack --config webpack.native.js",
     "test": "mocha-phantomjs test/index.html",
-    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch"
+    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
+    "docs": "documentation build src/index.js -f md -o API.md"
   },
   "repository": {
     "type": "git",
