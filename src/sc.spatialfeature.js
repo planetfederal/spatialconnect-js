@@ -10,17 +10,17 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as _ from 'lodash';
+import defaults from 'lodash/defaults';
 
 /**
  * Create a feature that is associated with a specific store and layer.
  * @function
  * @param {string} storeId
  * @param {string} layerId
- * @param {object} featureProps - The feature's properties
+ * @param {object} feature - The feature (geojson without geom)
  * @returns {object} the serialized feature
  */
-export function spatialFeature(storeId, layerId, featureProps) {
+export function spatialFeature(storeId, layerId, feature) {
   if (layerId === undefined) {
     throw new Error('layerId must be defined for all spatial features.');
   }
@@ -35,7 +35,7 @@ export function spatialFeature(storeId, layerId, featureProps) {
     type: 'Feature',
   };
 
-  const sf = _.defaults({ properties: featureProps }, defaultObj);
+  const sf = defaults(feature, defaultObj);
 
   sf.serialize = function () {
     const obj = {};

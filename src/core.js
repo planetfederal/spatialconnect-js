@@ -226,14 +226,17 @@ export const deleteFeature = featureId => window.WebViewJavascriptBridge.send({
 /**
  * Perform a query on the currently running list of stores.
  * @param {object} filter a filter object
- * @param {string} [storeId] if omitted, all running stores are queried.
+ * @param {string|array} [storeId] if omitted, all running stores are queried.
  */
 export const query$ = (filter, storeId) => {
   const c = storeId === undefined ?
     Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
-  const payload = {
-    filter: filter.value(),
-  };
+  const payload = {};
+  if (filter) {
+    payload.filter = filter.value ? filter.value() : filter;
+  } else {
+    payload.filter = {};
+  }
   if (storeId) {
     if (typeof storeId === 'string') {
       payload.storeId = [storeId];
@@ -254,14 +257,17 @@ export const query$ = (filter, storeId) => {
 /**
  * Perform a spatial query on the currently running list of spatial stores.
  * @param {object} filter a filter object
- * @param {string} [storeId] if omitted, all running stores are queried.
+ * @param {string|array} [storeId] if omitted, all running stores are queried.
  */
 export const spatialQuery$ = (filter, storeId) => {
   const c = storeId === undefined ?
     Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY;
-  const payload = {
-    filter: filter.value(),
-  };
+  const payload = {};
+  if (filter) {
+    payload.filter = filter.value ? filter.value() : filter;
+  } else {
+    payload.filter = {};
+  }
   if (storeId) {
     if (typeof storeId === 'string') {
       payload.storeId = [storeId];
