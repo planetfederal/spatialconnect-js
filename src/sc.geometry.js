@@ -13,6 +13,14 @@
 import * as _ from 'lodash';
 import { spatialFeature } from './sc.spatialfeature';
 
+/**
+ * Create a geometry that is associated with a specific store and layer.
+ * @function
+ * @param {string} storeId
+ * @param {string} layerId
+ * @param {object} gj - A geojson feature
+ * @returns {object} the geometry serialized to a geojson feauture
+ */
 export function geometry(storeId, layerId, gj) {
   let scGeometry = Object.create(spatialFeature(storeId, layerId, gj.properties));
 
@@ -36,5 +44,5 @@ export function geometry(storeId, layerId, gj) {
     return obj;
   };
 
-  return scGeometry;
+  return scGeometry.serialize();
 }

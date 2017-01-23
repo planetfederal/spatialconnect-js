@@ -85,7 +85,7 @@ var gj = {
 var store_name = 'a5d93796-5026-46f7-a2ff-e5dec85heh6b';
 var layer_name = 'point_features';
 var feature = sc.geometry(store_name, layer_name, gj);
-sc.createFeature(feature.serialize()).subscribe(function(f) {
+sc.createFeature(feature).subscribe(function(f) {
   //add feature to OpenLayers map
   var gj = (new ol.format.GeoJSON()).readFeature(f);
   vectorSource.addFeature(gj);

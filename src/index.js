@@ -10,8 +10,8 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-export * from './commands';
+export * from './core';
 export * from './filter';
 export * from './sc.spatialfeature';
 export * from './sc.geometry';
-export * from './core';
+export * from './commands';
