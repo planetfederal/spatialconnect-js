@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as _ from 'lodash';
+import defaults from 'lodash/defaults';
 import { spatialFeature } from './sc.spatialfeature';
 
 /**
@@ -22,10 +22,10 @@ import { spatialFeature } from './sc.spatialfeature';
  * @returns {object} the geometry serialized to a geojson feauture
  */
 export function geometry(storeId, layerId, gj) {
-  let scGeometry = Object.create(spatialFeature(storeId, layerId, gj.properties));
+  let scGeometry = Object.create(spatialFeature(storeId, layerId, gj));
 
-  const baseFeature = Object.getPrototypeOf(scGeometry).serialize();
-  scGeometry = _.defaults(gj, baseFeature);
+  const baseFeature = Object.getPrototypeOf(scGeometry);
+  scGeometry = defaults(gj, baseFeature);
 
   if (scGeometry.geometry === undefined) {
     scGeometry.geometry = null;

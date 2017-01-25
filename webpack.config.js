@@ -1,7 +1,6 @@
 module.exports = {
   entry: {
     spatialconnect: './src/index.js',
-    test: './src/index.test.js',
   },
   output: {
     library: 'spatialconnect',

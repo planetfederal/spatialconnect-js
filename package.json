@@ -9,9 +9,12 @@
     "build": "npm run build-es6 && npm run build-native",
     "build-es6": "webpack",
     "build-native": "webpack --config webpack.native.js",
-    "test": "mocha-phantomjs test/index.html",
+    "test": "./node_modules/.bin/jest .test.js",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
     "docs": "documentation build src/index.js -f md -o API.md"
+  },
+  "jest": {
+    "setupFiles": ["./__tests__/setup.js"]
   },
   "repository": {
     "type": "git",
@@ -24,18 +27,18 @@
   },
   "homepage": "https://github.com/boundlessgeo/spatialconnect-js",
   "dependencies": {
-    "lodash": "3.10.1",
+    "lodash": "4.17.4",
     "rx": "3.1.2",
     "stream": "0.0.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.8.0",
+    "babel-jest": "18.0.0",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-register": "^6.8.0",
     "babelify": "7.2.0",
-    "chai": "3.3.0",
     "commitizen": "1.0.4",
     "cz-conventional-changelog": "1.1.2",
     "eslint": "3.11.1",
@@ -45,9 +48,8 @@
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.8.0",
+    "jest": "18.1.0",
     "json-loader": "0.5.4",
-    "mocha": "^2.4.5",
-    "mocha-phantomjs": "^4.0.2",
     "require": "2.4.20",
     "rimraf": "2.5.0",
     "webpack": "1.12.1"
