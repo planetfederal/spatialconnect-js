@@ -230,7 +230,7 @@ export const deleteFeature = featureId => window.WebViewJavascriptBridge.send({
  */
 export const query$ = (filter, storeId) => {
   const c = storeId === undefined ?
-    Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
+    Commands.DATASERVICE_QUERYALL : Commands.DATASERVICE_QUERY;
   const payload = {};
   if (filter) {
     payload.filter = filter.value ? filter.value() : filter;
@@ -261,7 +261,7 @@ export const query$ = (filter, storeId) => {
  */
 export const spatialQuery$ = (filter, storeId) => {
   const c = storeId === undefined ?
-    Commands.DATASERVICE_GEOSPATIALQUERYALL : Commands.DATASERVICE_GEOSPATIALQUERY;
+    Commands.DATASERVICE_SPATIALQUERYALL : Commands.DATASERVICE_SPATIALQUERY;
   const payload = {};
   if (filter) {
     payload.filter = filter.value ? filter.value() : filter;
