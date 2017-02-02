@@ -130,7 +130,7 @@ describe('core methods', () => {
   it('to send query all stores request with null filter', () => {
     query$();
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_SPATIALQUERYALL,
+      { type: Commands.DATASERVICE_QUERYALL,
         responseId: expect.any(String),
         payload: { filter: expect.any(Object) } },
     );
@@ -139,7 +139,7 @@ describe('core methods', () => {
   it('to send query all stores request with empty filter', () => {
     query$({});
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_SPATIALQUERYALL,
+      { type: Commands.DATASERVICE_QUERYALL,
         responseId: expect.any(String),
         payload: { filter: expect.any(Object) } },
     );
@@ -148,7 +148,7 @@ describe('core methods', () => {
   it('to send query all stores request with filter', () => {
     query$(filter().limit(50));
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_SPATIALQUERYALL,
+      { type: Commands.DATASERVICE_QUERYALL,
         responseId: expect.any(String),
         payload: { filter: expect.any(Object) } },
     );
@@ -157,7 +157,7 @@ describe('core methods', () => {
   it('to send query single store request with filter', () => {
     query$(filter().limit(50), 'STORE_ID');
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_SPATIALQUERY,
+      { type: Commands.DATASERVICE_QUERY,
         responseId: expect.any(String),
         payload: {
           filter: expect.any(Object),
@@ -170,7 +170,7 @@ describe('core methods', () => {
   it('to send query multiple stores request with filter', () => {
     query$(filter().limit(50), ['STORE_ID', 'STORE_ID_2']);
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_SPATIALQUERY,
+      { type: Commands.DATASERVICE_QUERY,
         responseId: expect.any(String),
         payload: {
           filter: expect.any(Object),
@@ -183,7 +183,7 @@ describe('core methods', () => {
   it('to send query multiple stores request with filter', () => {
     spatialQuery$(filter().limit(50), ['STORE_ID', 'STORE_ID_2']);
     expect(NativeModules.SCBridge.handler).toHaveBeenCalledWith(
-      { type: Commands.DATASERVICE_GEOSPATIALQUERY,
+      { type: Commands.DATASERVICE_SPATIALQUERY,
         responseId: expect.any(String),
         payload: {
           filter: expect.any(Object),
