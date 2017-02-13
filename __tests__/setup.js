@@ -1,7 +1,7 @@
 /* globals jest:false,describe:false,it:false,expect:false*/
 
 jest.mock('react-native', () => ({
-  NativeModules: { SCBridge: { handler: jest.fn() } },
+  NativeModules: { RNSpatialConnect: { handler: jest.fn() } },
   DeviceEventEmitter: {},
   NativeAppEventEmitter: { addListener: jest.fn() },
   Platform: { OS: 'ios' },
