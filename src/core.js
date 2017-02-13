@@ -336,7 +336,7 @@ export const mqttConnected$ = () => {
  * @example sc.bindMapView(findNodeHandle(this.mapRef));
  */
 export const bindMapView = (node) => {
-  NativeModules.SCBridge.bindMapView(node);
+  NativeModules.RNSpatialConnect.bindMapView(node);
 };
 
 /**
@@ -344,7 +344,11 @@ export const bindMapView = (node) => {
  * @param {array} storeIds The stores in which to look for raster layers
  */
 export const addRasterLayers = (storeIds) => {
-  NativeModules.SCBridge.addRasterLayers(storeIds);
+  NativeModules.RNSpatialConnect.addRasterLayers(storeIds);
+};
+
+export const addConfigFilepath = (path) => {
+  NativeModules.RNSpatialConnect.addConfigFilepath(path);
 };
 
 // generic way to send a message to the SpatialConnect bridge
