@@ -80,7 +80,7 @@ export const initialize = () => {
       m.callbackId = callbackId;
     }
     if (navigator.product.match(/ReactNative/)) {
-      NativeModules.SCBridge.handler(m.data);
+      NativeModules.RNSpatialConnect.handler(m.data);
     } else if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
       sendMessageQueue.push(message);
       messagingIframe.src = IFRAME_SRC;
