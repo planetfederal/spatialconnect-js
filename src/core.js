@@ -333,10 +333,11 @@ export const mqttConnected$ = () => {
 /**
  * Binds the react-native-maps map view reference to the native sdk.
  * @param {object} node native node handle, use findNodeHandle
+ * @param {function} callback callback with first argument as error
  * @example sc.bindMapView(findNodeHandle(this.mapRef));
  */
-export const bindMapView = (node) => {
-  NativeModules.RNSpatialConnect.bindMapView(node);
+export const bindMapView = (node, callback) => {
+  NativeModules.RNSpatialConnect.bindMapView(node, callback);
 };
 
 /**
