@@ -1,0 +1,8 @@
+{
+  "build":"npm i",
+  "install":"npm run build",
+  "unit_test":"",
+  "integration_test":"",
+  "run":"",
+  "release":""
+}
