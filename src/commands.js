@@ -31,7 +31,7 @@ export const StoreStatus = {
  * An event received by the xAccessToken$ observable
  * @event AccessTokenEvent
  * @type {object}
- * @property {number} type - AUTHSERVICE_ACCESS_TOKEN
+ * @property {string} type - AUTHSERVICE_ACCESS_TOKEN
  * @property {string} payload - a json web token
  */
 
@@ -39,7 +39,7 @@ export const StoreStatus = {
  *
  * @event LoginStatusEvent
  * @type {object}
- * @property {number} type - AUTHSERVICE_LOGIN_STATUS
+ * @property {string} type - AUTHSERVICE_LOGIN_STATUS
  * @property {number} payload - SCAUTH_AUTHENTICATED or SCAUTH_NOT_AUTHENTICATED
  */
 
@@ -47,7 +47,7 @@ export const StoreStatus = {
  *
  * @event NotificationEvent
  * @type {object}
- * @property {number} type - NOTIFICATIONS
+ * @property {string} type - NOTIFICATIONS
  * @property {object} payload - A SpatialConnect Notification
  */
 
@@ -55,7 +55,7 @@ export const StoreStatus = {
  *
  * @event GPSEvent
  * @type {object}
- * @property {number} type - NOTIFICATIONS
+ * @property {string} type - NOTIFICATIONS
  * @property {object} payload - A GPS point
  * @property {number} payload.latitude
  * @property {number} payload.longitude
@@ -66,7 +66,7 @@ export const StoreStatus = {
  *
  * @event StoreListEvent
  * @type {object}
- * @property {number} type - DATASERVICE_STORELIST
+ * @property {string} type - DATASERVICE_STORELIST
  * @property {array} payload - The list of stores
  */
 
@@ -74,7 +74,7 @@ export const StoreStatus = {
  *
  * @event ActiveStoreListEvent
  * @type {object}
- * @property {number} type - DATASERVICE_ACTIVESTORESLIST
+ * @property {string} type - DATASERVICE_ACTIVESTORESLIST
  * @property {array} payload - The list of active stores
  */
 
@@ -82,7 +82,7 @@ export const StoreStatus = {
  *
  * @event FormListEvent
  * @type {object}
- * @property {number} type - DATASERVICE_FORMLIST
+ * @property {string} type - DATASERVICE_FORMLIST
  * @property {array} payload - The list of forms
  */
 
@@ -90,7 +90,7 @@ export const StoreStatus = {
  *
  * @event CreateFeatureEvent
  * @type {object}
- * @property {number} type - DATASERVICE_CREATEFEATURE
+ * @property {string} type - DATASERVICE_CREATEFEATURE
  * @property {object} payload - The feature that was added to the data store
  */
 
@@ -98,7 +98,7 @@ export const StoreStatus = {
  *
  * @event UpdateFeatureEvent
  * @type {object}
- * @property {number} type - DATASERVICE_UPDATEFEATURE
+ * @property {string} type - DATASERVICE_UPDATEFEATURE
  * @property {object} payload - The feature that was updated
  */
 
@@ -106,7 +106,7 @@ export const StoreStatus = {
  *
  * @event BackendHTTPURIEvent
  * @type {object}
- * @property {number} type - BACKENDSERVICE_HTTP_URI
+ * @property {string} type - BACKENDSERVICE_HTTP_URI
  * @property {object} payload
  * @property {string} payload.backendUri
  */
@@ -115,7 +115,7 @@ export const StoreStatus = {
  *
  * @event BackendMQTTConnectedEvent
  * @type {object}
- * @property {number} type - BACKENDSERVICE_MQTT_CONNECTED
+ * @property {string} type - BACKENDSERVICE_MQTT_CONNECTED
  * @property {object} payload
  * @property {number} payload.connected - 0 = not connected, 1 = connected
  */
