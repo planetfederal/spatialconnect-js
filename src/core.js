@@ -21,6 +21,7 @@ import { Commands } from './commands';
 import { initialize } from './bridge';
 
 const COMPLETED = '_completed';
+const ERROR = '_error';
 
 initialize(); // initalize bridge
 
@@ -45,13 +46,21 @@ let uniqueId = 1;
 const uniqueType = type =>
   `${type.toString()}_${(uniqueId += 1)}_${new Date().getTime()}`;
 
-const fromEvent$ = responseId => Rx.Observable.fromEventPattern(
-  function addHandler(h) {
-    return Platform.OS === 'ios' ?
-      NativeAppEventEmitter.addListener(responseId.toString(), h) :
-      DeviceEventEmitter.addListener(responseId.toString(), h);
-  },
-  function delHandler(_, signal) { signal.remove(); });
+const fromEvent$ = (responseId) => {
+  const addHandler = type => h => Platform.OS === 'ios' ?
+    NativeAppEventEmitter.addListener(type, h) :
+    DeviceEventEmitter.addListener(type, h);
+  const delHandler = (_, signal) => signal.remove();
+
+  const event$ = Rx.Observable.fromEventPattern(
+    addHandler(responseId.toString()), delHandler);
+  const eventError$ = Rx.Observable.fromEventPattern(
+    addHandler(responseId.toString() + ERROR), delHandler)
+    .map((action) => {
+      throw new Error(action.payload);
+    });
+  return event$.merge(eventError$);
+};
 
 /**
  * Authenticate a user. No return observable,

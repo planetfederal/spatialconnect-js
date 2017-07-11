@@ -7,6 +7,7 @@
     "no-use-before-define": ["error", { "functions": false }],
     "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
     "import/prefer-default-export": "off",
+    "no-confusing-arrow": "off"
   },
   "settings": {
     "import/resolver": "webpack",
@@ -16,6 +17,7 @@
     "window": false,
     "document": false,
     "navigator": false,
+    "throw": false,
     "WebViewJavascriptBridge": false,
     "_WebViewJavascriptBridge": false
   }
