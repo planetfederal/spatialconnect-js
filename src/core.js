@@ -361,6 +361,10 @@ export const addConfigFilepath = (path) => {
   NativeModules.RNSpatialConnect.addConfigFilepath(path);
 };
 
+export const addConfig = (cfg) => {
+  NativeModules.RNSpatialConnect.addConfig(cfg);
+};
+
 // generic way to send a message to the SpatialConnect bridge
 export const sendMessage = (typeId, payload) => window.WebViewJavascriptBridge.send({
   type: typeId,
