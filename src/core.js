@@ -328,12 +328,12 @@ export const backendUri$ = () => {
 /**
  * Returns an observable that is always up-to-date with the current connection status
  * of the backend MQTT service.
- * @returns {Observable} emits BackendMQTTConnectedEvent
+ * @returns {Observable} emits BackendConnectedEvent
  */
 export const mqttConnected$ = () => {
-  const responseId = uniqueType(Commands.BACKENDSERVICE_MQTT_CONNECTED);
+  const responseId = uniqueType(Commands.BACKENDSERVICE_CONNECTED);
   window.WebViewJavascriptBridge.send({
-    type: Commands.BACKENDSERVICE_MQTT_CONNECTED,
+    type: Commands.BACKENDSERVICE_CONNECTED,
     responseId,
   });
   return fromEvent$(responseId);
