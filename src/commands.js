@@ -113,9 +113,9 @@ export const StoreStatus = {
 
 /**
  *
- * @event BackendMQTTConnectedEvent
+ * @event BackendConnectedEvent
  * @type {object}
- * @property {string} type - BACKENDSERVICE_MQTT_CONNECTED
+ * @property {string} type - BACKENDSERVICE_CONNECTED
  * @property {object} payload
  * @property {number} payload.connected - 0 = not connected, 1 = connected
  */

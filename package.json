@@ -1,6 +1,6 @@
 {
   "name": "spatialconnect",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "Javascript Library for Spatial Connect",
   "main": "dist/spatialconnect.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/boundlessgeo/spatialconnect-js"
   },
-  "author": "Wes Richardet <wrichardet@boundlessgeo.com> (http://boundlessgeo.com)",
+  "author": "Boundless Spatial, Inc.",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/boundlessgeo/spatialconnect-js/issues"

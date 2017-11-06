@@ -205,7 +205,7 @@ describe('core methods', () => {
   it('to send mqttConnected request', () => {
     mqttConnected$();
     expect(NativeModules.RNSpatialConnect.handler).toHaveBeenCalledWith(
-      { type: Commands.BACKENDSERVICE_MQTT_CONNECTED,
+      { type: Commands.BACKENDSERVICE_CONNECTED,
         responseId: expect.any(String),
       },
     );
